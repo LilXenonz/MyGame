@@ -43,6 +43,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        // addede 
+
+        public Camera AddedCamera;
+        [SerializeField] private AudioClip[] m_RunFootstepSounds;  
+
+
+
         // Use this for initialization
         private void Start()
         {
@@ -97,8 +104,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             float speed;
             GetInput(out speed);
+
+
+
             // always move along the camera forward as it is the direction that it being aimed at
-            Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
+            //Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
+
+
+            // added
+            Vector3 desiredMove = AddedCamera.transform.forward * m_Input.y + AddedCamera.transform.right * m_Input.x;
+
 
             // get a normal for the surface that is being touched to move along it
             RaycastHit hitInfo;
@@ -167,14 +182,31 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 return;
             }
-            // pick & play a random footstep sound from the array,
-            // excluding sound at index 0
-            int n = Random.Range(1, m_FootstepSounds.Length);
-            m_AudioSource.clip = m_FootstepSounds[n];
-            m_AudioSource.PlayOneShot(m_AudioSource.clip);
-            // move picked sound to index 0 so it's not picked next time
-            m_FootstepSounds[n] = m_FootstepSounds[0];
-            m_FootstepSounds[0] = m_AudioSource.clip;
+
+            if(m_IsWalking == true)
+            {
+                // pick & play a random footstep sound from the array,
+                // excluding sound at index 0
+                int n = Random.Range(1, m_FootstepSounds.Length);
+                m_AudioSource.clip = m_FootstepSounds[n];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+                // move picked sound to index 0 so it's not picked next time
+                m_FootstepSounds[n] = m_FootstepSounds[0];
+                m_FootstepSounds[0] = m_AudioSource.clip;
+            }
+            else if (m_IsWalking == false)
+            {
+                // pick & play a random footstep sound from the array,
+                // excluding sound at index 0
+                int m = Random.Range(1, m_RunFootstepSounds.Length);
+                m_AudioSource.clip = m_RunFootstepSounds[m];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+                // move picked sound to index 0 so it's not picked next time
+                // move picked sound to index 0 so it's not picked next time
+                m_RunFootstepSounds[m] = m_RunFootstepSounds[0];
+                m_RunFootstepSounds[0] = m_AudioSource.clip;
+            }
+
         }
 
 
