@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Cinemachine;
+using UnityStandardAssets.Characters.FirstPerson;
+
 public class CamInteraction : MonoBehaviour
 {
     public Text InteractionText;
@@ -8,6 +11,14 @@ public class CamInteraction : MonoBehaviour
     private float InteractionDis = 5f;
 
     public bool CanInteraction = true;
+
+
+    //look at
+
+    public CinemachineCamera PlayerCam;
+    public CinemachineCamera TalkNpcCam;
+
+    public FirstPersonController FpsController;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -56,9 +67,18 @@ public class CamInteraction : MonoBehaviour
     IEnumerator TalkToNPC()
     {
 
-
+        InteractionText.text = "";
+        FpsController.enabled = false;
+        TalkNpcCam.enabled = true;
+        PlayerCam.enabled = false;
 
         yield return new WaitForSeconds(2f);
+
+        FpsController.enabled = true;
+        PlayerCam.enabled = true;
+        TalkNpcCam.enabled = false;
+
+        CanInteraction = true;
     }
 }
 
