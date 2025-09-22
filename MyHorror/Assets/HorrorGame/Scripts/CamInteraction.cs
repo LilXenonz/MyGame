@@ -6,6 +6,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class CamInteraction : MonoBehaviour
 {
+    public LookAtFunc lookAtFunc;
+
     public Text InteractionText;
 
     private float InteractionDis = 5f;
@@ -72,7 +74,13 @@ public class CamInteraction : MonoBehaviour
         TalkNpcCam.enabled = true;
         PlayerCam.enabled = false;
 
+        // look at
+        lookAtFunc.IKActive = true;
+
         yield return new WaitForSeconds(2f);
+
+        //look at
+        lookAtFunc.IKActive = false;
 
         FpsController.enabled = true;
         PlayerCam.enabled = true;
