@@ -125,6 +125,7 @@ public class CamInteraction : MonoBehaviour
 
         lookAtFunc.IKActive = true;
 
+
         //look at
 
         yield return new WaitForSeconds(1f);
