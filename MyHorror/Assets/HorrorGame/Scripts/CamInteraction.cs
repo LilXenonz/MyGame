@@ -19,6 +19,7 @@ public class CamInteraction : MonoBehaviour
 
     public CinemachineCamera PlayerCam;
     public CinemachineCamera TalkNpcCam;
+    public CinemachineCamera CopZoomCam;
 
     public FirstPersonController FpsController;
     //look at
@@ -69,6 +70,19 @@ public class CamInteraction : MonoBehaviour
                         StartCoroutine(TalkToNPC());
                     }
                 }
+                else if (hit.collider.CompareTag("Cop"))
+                {
+                    InteractionText.text = "Talk To Cop";
+
+                    //talk
+
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        CanInteraction = false;
+                        StartCoroutine(TalkToCop());
+                    }
+                }
+
                 else
                 {
                     InteractionText.text = "";
@@ -84,6 +98,65 @@ public class CamInteraction : MonoBehaviour
 
     }
 
+    IEnumerator TalkToCop()
+    {
+        InteractionText.text = "";
+        FpsController.enabled = false;
+        CopZoomCam.enabled = true;
+        TalkNpcCam.enabled = false;
+        PlayerCam.enabled = false;
+
+        //look at
+
+
+
+        //look at
+
+        yield return new WaitForSeconds(1f);
+
+        TalkPanel.SetActive(true);
+
+        //audio
+
+        TalkSrc.Play();
+
+        //audio
+
+
+        SubText.text = "Me: ";
+        holder = "Why are you fat?";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        //audio
+        TalkSrc.Stop();
+        //audio
+
+        yield return MousePressed();
+
+        TalkSrc.Play();
+
+
+        SubText.text = "Cop: ";
+        holder = "I eat a lot of donuts";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        TalkSrc.Stop();
+
+
+        yield return MousePressed();
+
+        StartCoroutine(Final());
+
+    }
+
     IEnumerator TalkToNPC()
     {
 
@@ -91,6 +164,7 @@ public class CamInteraction : MonoBehaviour
         FpsController.enabled = false;
         TalkNpcCam.enabled = true;
         PlayerCam.enabled = false;
+        CopZoomCam.enabled= false;
 
         // look at
         lookAtFunc.IKActive = true;
@@ -103,13 +177,14 @@ public class CamInteraction : MonoBehaviour
         Cursor.visible = true;
         //cursor 
 
+        TalkPanel.SetActive(true);
+
         //audio
 
         TalkSrc.Play();
 
         //audio
 
-        TalkPanel.SetActive(true);
 
         SubText.text = "Me: ";
         holder = "Hello, are you okay ?";
@@ -119,8 +194,9 @@ public class CamInteraction : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
 
+        //audio
         TalkSrc.Stop();
-
+        //audio
 
         yield return MousePressed();
 
@@ -227,6 +303,7 @@ public class CamInteraction : MonoBehaviour
         FpsController.enabled = true;
         PlayerCam.enabled = true;
         TalkNpcCam.enabled = false;
+        CopZoomCam.enabled = false;
 
         CanInteraction = true;
 

@@ -8,7 +8,7 @@ public class LookAtFunc : MonoBehaviour
 
     public Transform LookAtObj = null;
 
-    public float LookWeight = 2f;
+    public float LookWeight = 0f;
 
 
     private void OnAnimatorIK(int layerIndex)
