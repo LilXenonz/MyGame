@@ -34,6 +34,12 @@ public class CamInteraction : MonoBehaviour
 
     //talk
 
+    //audio
+
+    public AudioSource TalkSrc;
+
+    //audio
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -97,6 +103,12 @@ public class CamInteraction : MonoBehaviour
         Cursor.visible = true;
         //cursor 
 
+        //audio
+
+        TalkSrc.Play();
+
+        //audio
+
         TalkPanel.SetActive(true);
 
         SubText.text = "Me: ";
@@ -107,7 +119,13 @@ public class CamInteraction : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
 
+        TalkSrc.Stop();
+
+
         yield return MousePressed();
+
+        TalkSrc.Play();
+
 
         SubText.text = "Man: ";
         holder = "Yes sir";
@@ -117,7 +135,13 @@ public class CamInteraction : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
 
+        TalkSrc.Stop();
+
+
         yield return MousePressed();
+
+        TalkSrc.Play();
+
 
         SubText.text = "Man: ";
         holder = "Are you lost";
@@ -127,13 +151,11 @@ public class CamInteraction : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
 
+        TalkSrc.Stop();
 
         yield return new WaitForSeconds(1f);
 
-        ChoicePack.SetActive(true);
-
-        yield return new WaitForSeconds(5f);
-       
+        ChoicePack.SetActive(true);       
 
         
     }
@@ -151,6 +173,9 @@ public class CamInteraction : MonoBehaviour
     {
         ChoicePack.SetActive(false);
 
+        TalkSrc.Play();
+
+
         SubText.text = "Me: ";
         holder = "No, im from here";
         foreach (char c in holder)
@@ -159,12 +184,19 @@ public class CamInteraction : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
 
+        TalkSrc.Stop();
+
+        yield return new WaitForSeconds(3f);
+
         StartCoroutine(Final());
     }
     IEnumerator Choise2()
     {
 
         ChoicePack.SetActive(false);
+
+
+        TalkSrc.Play();
 
         SubText.text = "Me: ";
         holder = "Yes, i will ask for help later";
@@ -173,6 +205,10 @@ public class CamInteraction : MonoBehaviour
             SubText.text += c;
             yield return new WaitForSeconds(time);
         }
+
+        TalkSrc.Stop();
+
+        yield return new WaitForSeconds(3f);
 
         StartCoroutine(Final());
 
