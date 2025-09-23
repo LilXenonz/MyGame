@@ -345,9 +345,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 592270373}
+  CopAnimator: {fileID: 1446581356}
   IKActive: 0
   LookAtObj: {fileID: 1318912827}
   LookWeight: 0
+  CamInteract: {fileID: 1323335968}
 --- !u!1 &857058967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb21c101f9b52349a7e6504b2848d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CamInteraction
+  TalkToNpcBool: 0
+  TalkToCopBool: 0
   lookAtFunc: {fileID: 592270376}
   InteractionText: {fileID: 2107689322}
   CanInteraction: 1
@@ -1987,10 +1991,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bd5fdb69d6d514cb9c821cb1efc40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1446581356}
+  animator: {fileID: 592270373}
+  CopAnimator: {fileID: 1446581356}
   IKActive: 0
   LookAtObj: {fileID: 1318912827}
   LookWeight: 0
+  CamInteract: {fileID: 1323335968}
 --- !u!95 &1446581356 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 54c1365cb6a6e1b4cae8dcc2ad7bd017, type: 3}

@@ -6,6 +6,14 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class CamInteraction : MonoBehaviour
 {
+
+    //Loockat check
+
+    public bool TalkToNpcBool = false;
+    public bool TalkToCopBool = false;
+
+    //Loockat check
+
     public LookAtFunc lookAtFunc;
 
     public Text InteractionText;
@@ -100,6 +108,13 @@ public class CamInteraction : MonoBehaviour
 
     IEnumerator TalkToCop()
     {
+        //chechk bool
+
+        TalkToCopBool = true;
+
+        //chechk bool
+
+
         InteractionText.text = "";
         FpsController.enabled = false;
         CopZoomCam.enabled = true;
@@ -108,7 +123,7 @@ public class CamInteraction : MonoBehaviour
 
         //look at
 
-
+        lookAtFunc.IKActive = true;
 
         //look at
 
@@ -159,6 +174,12 @@ public class CamInteraction : MonoBehaviour
 
     IEnumerator TalkToNPC()
     {
+
+        //chechk bool
+
+        TalkToNpcBool = true;
+
+        //chechk bool
 
         InteractionText.text = "";
         FpsController.enabled = false;
@@ -292,6 +313,13 @@ public class CamInteraction : MonoBehaviour
 
     IEnumerator Final() 
     {
+        //chechk bool
+
+        TalkToCopBool = false;
+        TalkToNpcBool = false;
+
+        //chechk bool
+
         TalkPanel.SetActive(false);
         ChoicePack.SetActive(false);
         SubText.text = "";
