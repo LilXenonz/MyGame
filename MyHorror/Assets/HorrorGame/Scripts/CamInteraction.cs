@@ -21,6 +21,18 @@ public class CamInteraction : MonoBehaviour
     public CinemachineCamera TalkNpcCam;
 
     public FirstPersonController FpsController;
+    //look at
+
+
+    //talk
+
+    public GameObject TalkPanel;
+    public GameObject ChoicePack;
+    public Text SubText;
+    string holder;
+    float time = 0.05f;
+
+    //talk
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -76,17 +88,121 @@ public class CamInteraction : MonoBehaviour
 
         // look at
         lookAtFunc.IKActive = true;
+        //look at
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);   
+        
+        //cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        //cursor 
+
+        TalkPanel.SetActive(true);
+
+        SubText.text = "Me: ";
+        holder = "Hello, are you okay ?";
+        foreach(char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePressed();
+
+        SubText.text = "Man: ";
+        holder = "Yes sir";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        yield return MousePressed();
+
+        SubText.text = "Man: ";
+        holder = "Are you lost";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+
+        yield return new WaitForSeconds(1f);
+
+        ChoicePack.SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+       
+
+        
+    }
+
+    public void Choice1Func()
+    {
+        StartCoroutine(Choise1());
+    }
+    public void Choice2Func()
+    {
+        StartCoroutine(Choise2());
+    }
+
+    IEnumerator Choise1()
+    {
+        ChoicePack.SetActive(false);
+
+        SubText.text = "Me: ";
+        holder = "No, im from here";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        StartCoroutine(Final());
+    }
+    IEnumerator Choise2()
+    {
+
+        ChoicePack.SetActive(false);
+
+        SubText.text = "Me: ";
+        holder = "Yes, i will ask for help later";
+        foreach (char c in holder)
+        {
+            SubText.text += c;
+            yield return new WaitForSeconds(time);
+        }
+
+        StartCoroutine(Final());
+
+    }
+
+    IEnumerator Final() 
+    {
+        TalkPanel.SetActive(false);
+        ChoicePack.SetActive(false);
+        SubText.text = "";
 
         //look at
         lookAtFunc.IKActive = false;
+        //look at
 
         FpsController.enabled = true;
         PlayerCam.enabled = true;
         TalkNpcCam.enabled = false;
 
         CanInteraction = true;
+
+        yield return null;
+    }
+
+    IEnumerator MousePressed()
+    {
+        while(!Input.GetMouseButtonDown(0))
+        {
+            yield return null;
+        }
     }
 }
 

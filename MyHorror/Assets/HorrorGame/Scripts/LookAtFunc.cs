@@ -20,16 +20,20 @@ public class LookAtFunc : MonoBehaviour
 
                 if(LookAtObj != null)
                 {
-                    animator.SetLookAtWeight(LookWeight);
-                    animator.SetLookAtPosition(LookAtObj.position);
+                    LookWeight = Mathf.Lerp(LookWeight, 1, Time.deltaTime * 2);
+
                 }
 
             }
 
             else
             {
-                animator.SetLookAtWeight(0);
+                LookWeight = Mathf.Lerp(LookWeight, 0, Time.deltaTime * 2);
             }
+
+            animator.SetLookAtPosition(LookAtObj.position);
+            animator.SetLookAtWeight(LookWeight);
+
         }
     }
 
