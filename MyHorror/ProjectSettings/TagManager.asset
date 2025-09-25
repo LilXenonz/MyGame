@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Cop
+  - Paper
   layers:
   - Default
   - TransparentFX
