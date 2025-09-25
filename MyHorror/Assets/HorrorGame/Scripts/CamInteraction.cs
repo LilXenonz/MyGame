@@ -50,6 +50,14 @@ public class CamInteraction : MonoBehaviour
     //audio
 
 
+    //prograssbar
+
+    public ProgressBar ProgressBarScript;
+
+    //prograssbar
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -75,7 +83,16 @@ public class CamInteraction : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         CanInteraction = false;
-                        StartCoroutine(TalkToNPC());
+
+
+                        //progressbar  
+
+                        ProgressBarScript.TalkNpcProgress();
+
+                        //progressbar  
+
+
+                        //StartCoroutine(TalkToNPC());
                     }
                 }
                 else if (hit.collider.CompareTag("Cop"))
@@ -173,6 +190,14 @@ public class CamInteraction : MonoBehaviour
 
     }
 
+    public void TalkToNpcVoid()
+    {
+      
+        StartCoroutine(TalkToNPC());
+
+    }
+
+
     IEnumerator TalkToNPC()
     {
 
@@ -253,8 +278,14 @@ public class CamInteraction : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        ChoicePack.SetActive(true);       
+        ChoicePack.SetActive(true);
 
+
+        //Reset
+
+        ProgressBarScript.ResetProgressBar();
+
+        //Reset
         
     }
 
