@@ -22,10 +22,27 @@ public class NoteSystem : MonoBehaviour
 
     bool canInteract = true;
 
+    public AudioClip[] NextPageSound;
+
+    int PageNumber = 1;
+
+    string ParentText;
+
+    [SerializeField] string Page1Text;
+    [SerializeField] string Page2Text;
+    [SerializeField] string Page3Text;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        //give page value
+
+        Page1Text = "this is a messege from me wsp man";
+        Page2Text = "ibrahim är en smart människa tror jag";
+        Page3Text = "wsp man hahahhahah wsp sippi sipss";
+
+        //give page value
+
     }
 
     // Update is called once per frame
@@ -44,19 +61,8 @@ public class NoteSystem : MonoBehaviour
 
                     if(Input.GetKeyDown(KeyCode.E))
                     {
-                        canInteract = false;
-                        InteractionText.text = "";
-                        NoteGB.SetActive(true);
-                        NoteText.text = "THIS IS A TEST WE DID. I HOPE YOU LIVE";
-                        Source.PlayOneShot(PaperSound);
-                        FpsController.enabled = false;
-
-                        //cursor
-
-                        Cursor.lockState = CursorLockMode.None;
-                        Cursor.visible = true;
-
-                        //cursor
+                        ParentText = Page1Text;
+                        ShowText();
                     }
                 }
                 else
@@ -69,6 +75,23 @@ public class NoteSystem : MonoBehaviour
 
         }
 
+    }
+
+    void ShowText()
+    {
+        canInteract = false;
+        InteractionText.text = "";
+        NoteGB.SetActive(true);
+        NoteText.text = ParentText;
+        Source.PlayOneShot(PaperSound);
+        FpsController.enabled = false;
+
+        //cursor
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        //cursor
     }
 
     public void TakeNoteFunc()
@@ -88,4 +111,96 @@ public class NoteSystem : MonoBehaviour
         //cursor
 
     }
+
+
+    public void NextPage()
+    {
+
+
+        if(PageNumber == 1)
+        {
+            PageNumber = 2;
+
+            ParentText = Page2Text;
+
+            ShowText();
+        }
+        else if(PageNumber == 2) 
+        {
+            PageNumber = 3;
+
+            ParentText = Page3Text;
+
+            ShowText();
+
+        }
+        else if (PageNumber == 3)
+        {
+            PageNumber = 1;
+
+            ParentText = Page1Text;
+
+            ShowText();
+
+        }
+
+
+
+        //audio randomized
+
+        Source.Stop();
+
+        int randomNum = Random.Range(0, NextPageSound.Length);
+
+        Source.PlayOneShot(NextPageSound[randomNum]);
+
+        //audio randomized
+
+
+    }
+
+    public void PreviousPage()
+    {
+
+        if (PageNumber == 1)
+        {
+            PageNumber = 3;
+
+            ParentText = Page3Text;
+
+            ShowText();
+        }
+        else if (PageNumber == 2)
+        {
+            PageNumber = 1;
+
+            ParentText = Page1Text;
+
+            ShowText();
+
+        }
+        else if (PageNumber == 3)
+        {
+            PageNumber = 2;
+
+            ParentText = Page2Text;
+
+            ShowText();
+
+        }
+
+
+        //audio randomized
+
+        Source.Stop();
+
+        int randomNum = Random.Range(0, NextPageSound.Length);
+
+        Source.PlayOneShot(NextPageSound[randomNum]);
+
+        //audio randomized
+
+    }
+
+
 }
