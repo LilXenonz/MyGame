@@ -7,6 +7,7 @@ TagManager:
   - NPC
   - Cop
   - Paper
+  - Door
   layers:
   - Default
   - TransparentFX
