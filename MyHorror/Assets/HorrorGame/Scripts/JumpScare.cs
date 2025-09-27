@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class JumpScare : MonoBehaviour
@@ -6,10 +7,17 @@ public class JumpScare : MonoBehaviour
     bool CanInteract = true;
 
     public Animator DoorAnimator;
+
+    public GameObject NPC;
+
+    public AudioSource Source;
+
+    public AudioClip JumpScareSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        NPC.SetActive(false);
     }
 
     // Update is called once per frame
@@ -28,11 +36,8 @@ public class JumpScare : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.E))
                     { 
                     
-                        CanInteract = false;
+                        StartCoroutine(NpcJumpScare());
 
-                        DoorAnimator.SetInteger("C", 1);
-        
-                    
                     }
             
                 }
@@ -40,6 +45,19 @@ public class JumpScare : MonoBehaviour
         }
     }
 
+
+    IEnumerator NpcJumpScare()
+    {
+        CanInteract = false;
+
+        DoorAnimator.SetInteger("C", 1);
+
+        yield return new WaitForSeconds(0.8f);
+
+        NPC.SetActive(true);
+
+        Source.PlayOneShot(JumpScareSound);
+    }
 
 
 }
