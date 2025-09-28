@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class NPCSystem : MonoBehaviour
 {
@@ -18,10 +20,32 @@ public class NPCSystem : MonoBehaviour
 
     public int RandomSpotNumber = 0;
 
+    bool ShouldGoFinalDes = false;
+
+    public GameObject FinalDesGB;
+
+    bool AITalking = false;
+
+    bool AITalkedOnce = false;
+
+    //talk
+
+    public Text SubText;
+
+    public GameObject TalkPanel;
+
+    //talk
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        ShouldFollowPlayer = false;
+
+        ShouldGoRandomSpot=false;
+
+        ShouldGoFinalDes=true;
+
         agent = GetComponent<NavMeshAgent>();
 
         animator = GetComponent<Animator>();
@@ -164,5 +188,72 @@ public class NPCSystem : MonoBehaviour
             }
         }
 
+        if (ShouldGoFinalDes == true && AITalking == false)
+        {
+         
+            
+
+            float DistanceUsToAI = Vector3.Distance(transform.position, ObjectToFollow.transform.position);
+
+            float DistanceFinal = Vector3.Distance(transform.position, FinalDesGB.transform.position);
+
+            if(DistanceUsToAI <= 15)
+            {
+                if (DistanceFinal < 5)
+                {
+                    //reached destination
+
+                    agent.isStopped = true;
+                    animator.SetInteger("C", 0);
+                }
+                else if (DistanceFinal >= 5)
+                {
+                    //should go to destination
+                    agent.isStopped = false;
+                    animator.SetInteger("C", 1);
+                    agent.speed = 3;
+
+                    agent.SetDestination(FinalDesGB.transform.position);
+
+                    AITalkedOnce = false;
+                }
+            }
+            else if (DistanceUsToAI > 15)
+            {
+                agent.isStopped = true;
+                animator.SetInteger("C", 0);
+
+                if(AITalkedOnce == false)
+                {
+
+                    StartCoroutine(NPCTalking());
+
+                }
+
+            }
+
+        }
+
     }
+
+    IEnumerator NPCTalking()
+    {
+        AITalking = true;
+
+        AITalkedOnce = true;
+
+        TalkPanel.SetActive(true);
+
+        SubText.text = "Move Faste, Come on man";
+
+        yield return new WaitForSeconds(2f);
+
+        TalkPanel.SetActive(false);
+
+        SubText.text = "";
+
+        AITalking = false;
+
+    }
+
 }
