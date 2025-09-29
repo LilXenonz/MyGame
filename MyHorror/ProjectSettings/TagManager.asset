@@ -8,6 +8,8 @@ TagManager:
   - Cop
   - Paper
   - Door
+  - BlueSphere
+  - PlaceSphere
   layers:
   - Default
   - TransparentFX

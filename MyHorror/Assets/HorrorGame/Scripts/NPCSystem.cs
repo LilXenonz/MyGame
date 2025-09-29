@@ -42,9 +42,9 @@ public class NPCSystem : MonoBehaviour
     {
         ShouldFollowPlayer = false;
 
-        ShouldGoRandomSpot=false;
+        ShouldGoRandomSpot = false;
 
-        ShouldGoFinalDes=true;
+        ShouldGoFinalDes = false;
 
         agent = GetComponent<NavMeshAgent>();
 
