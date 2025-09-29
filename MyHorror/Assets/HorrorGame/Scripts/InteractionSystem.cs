@@ -12,6 +12,26 @@ public class InteractionSystem : MonoBehaviour
 
     public GameObject SpherePlaced;
 
+    //YellowBox
+
+    public GameObject BoxTake;
+
+    public GameObject BoxHeld;
+
+    public GameObject BoxPlaced;
+
+    //YellowBox
+
+    //Cyllinder
+
+    public GameObject CyllinderTake;
+
+    public GameObject CyllinderHeld;
+
+    public GameObject CyllinderPlaced;
+
+    //Cyllinder
+
     bool CanDoJob = true;
    
     public Text InteractionText;
@@ -19,8 +39,16 @@ public class InteractionSystem : MonoBehaviour
     //Inventroy
 
     bool HaveSphere = false; 
+    bool HaveBox = false; 
+    bool HaveCyllinder = false;
 
     //Inventroy
+
+    public AudioSource source;
+
+    public AudioClip TakeClip;
+    public AudioClip PlaceClip;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,6 +84,8 @@ public class InteractionSystem : MonoBehaviour
 
                         HaveSphere = true;
 
+                        source.PlayOneShot(TakeClip);
+
                     }
 
                 }
@@ -72,8 +102,85 @@ public class InteractionSystem : MonoBehaviour
 
                         HaveSphere = false;
 
+                        source.PlayOneShot(PlaceClip);
+
+
                     }
                 }
+
+                else if (hit.collider.CompareTag("YellowBox") && HaveBox == false)
+                {
+                    InteractionText.text = "Take Box";
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+
+                        BoxTake.SetActive(false);
+
+                        BoxHeld.SetActive(true);
+
+                        HaveBox = true;
+
+                        source.PlayOneShot(TakeClip);
+
+
+                    }
+                }
+                else if (hit.collider.CompareTag("PlaceBox") && HaveBox == true)
+                {
+                    InteractionText.text = "Place Box";
+                    
+                    if (Input.GetMouseButtonDown(0))
+                    {
+
+                        BoxHeld.SetActive(false);
+
+                        BoxPlaced.SetActive(true);
+
+                        HaveBox = false;
+
+                        source.PlayOneShot(PlaceClip);
+
+
+                    }
+                }
+                else if (hit.collider.CompareTag("BlackCyllinder") && HaveCyllinder == false)
+                {
+                    InteractionText.text = "Take cyllinder";
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+
+                        CyllinderTake.SetActive(false);
+
+                        CyllinderHeld.SetActive(true);
+
+                        HaveCyllinder = true;
+
+                        source.PlayOneShot(TakeClip);
+
+
+                    }
+                }
+                else if (hit.collider.CompareTag("PlaceCyllinder") && HaveCyllinder == true)
+                {
+                    InteractionText.text = "Place cyllinder";
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+
+                        CyllinderHeld.SetActive(false);
+
+                        CyllinderPlaced.SetActive(true);
+
+                        HaveCyllinder = false;
+
+                        source.PlayOneShot(PlaceClip);
+
+
+                    }
+                }
+
                 else
                 {
                     InteractionText.text = "";

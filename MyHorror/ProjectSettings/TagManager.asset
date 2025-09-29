@@ -10,6 +10,10 @@ TagManager:
   - Door
   - BlueSphere
   - PlaceSphere
+  - YellowBox
+  - BlackCyllinder
+  - PlaceCyllinder
+  - PlaceBox
   layers:
   - Default
   - TransparentFX
