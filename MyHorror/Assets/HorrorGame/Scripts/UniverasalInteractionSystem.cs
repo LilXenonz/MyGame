@@ -44,8 +44,9 @@ public class UniverasalInteractionSystem : MonoBehaviour
 
                         Interactiontext.text = "Take";
 
-                        if(Input.GetMouseButton(0))
+                        if(Input.GetMouseButtonDown(0))
                         {
+                            
 
                             Source.PlayOneShot(TakeClip);
 
@@ -91,8 +92,10 @@ public class UniverasalInteractionSystem : MonoBehaviour
                         Interactiontext.text = "Place";
 
 
-                        if (Input.GetMouseButton(0))
+                        if (Input.GetMouseButtonDown(0))
                         {
+                            CanInteract = true;
+
 
                             Source.PlayOneShot(PlaceClip);
 

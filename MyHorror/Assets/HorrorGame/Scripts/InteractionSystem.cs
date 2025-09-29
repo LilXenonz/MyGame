@@ -96,6 +96,7 @@ public class InteractionSystem : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
 
+
                         SphereHeld.SetActive(false);
 
                         SpherePlaced.SetActive(true);
@@ -132,6 +133,7 @@ public class InteractionSystem : MonoBehaviour
                     
                     if (Input.GetMouseButtonDown(0))
                     {
+
 
                         BoxHeld.SetActive(false);
 

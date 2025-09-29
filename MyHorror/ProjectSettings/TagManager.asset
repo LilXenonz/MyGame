@@ -16,6 +16,7 @@ TagManager:
   - PlaceBox
   - Pickable
   - PlaceOn
+  - Throwable
   layers:
   - Default
   - TransparentFX
