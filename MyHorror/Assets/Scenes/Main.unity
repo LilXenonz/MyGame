@@ -7972,7 +7972,7 @@ Transform:
   m_GameObject: {fileID: 919132149189949269}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.136, y: -0.74, z: 5.447}
+  m_LocalPosition: {x: 5.136, y: -0.811, z: 5.42}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -8212,9 +8212,10 @@ GameObject:
   m_Component:
   - component: {fileID: 543450653665258991}
   - component: {fileID: 5866666021877069717}
+  - component: {fileID: 5866666021877069718}
   m_Layer: 0
   m_Name: PS1 (1)
-  m_TagString: Untagged
+  m_TagString: Friend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11784,6 +11785,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &5866666021877069718
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149189949269}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.80100757, y: 1.1773661, z: 0.48097587}
+  m_Center: {x: -0.099496245, y: 1.2837577, z: 0.020508895}
 --- !u!1 &5889149865681736774
 GameObject:
   m_ObjectHideFlags: 0
@@ -12807,9 +12829,10 @@ GameObject:
   - component: {fileID: 6983445719072489217}
   - component: {fileID: 6983445719080140577}
   - component: {fileID: 6983445719066514209}
+  - component: {fileID: 6983445719080140578}
   m_Layer: 0
   m_Name: FPSController
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12842,14 +12865,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6983445719068838593}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.8, y: -0.35, z: 4.7}
+  m_LocalRotation: {x: 0, y: -0.6329756, z: 0, w: 0.77417177}
+  m_LocalPosition: {x: 5.8, y: -0.35, z: 5.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6983445719069071075}
   m_Father: {fileID: 1773275157}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -78.54, z: 0}
 --- !u!4 &6983445719069071075
 Transform:
   m_ObjectHideFlags: 0
@@ -13068,6 +13091,21 @@ MonoBehaviour:
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   AddedCamera: {fileID: 0}
   m_RunFootstepSounds: []
+--- !u!114 &6983445719080140578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6983445719068838593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b87d3038bc72f439ca7205dfe674e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SubText: {fileID: 1424159396}
+  TalkPanel: {fileID: 2064006578}
+  InteractionText: {fileID: 2107689322}
 --- !u!1 &7002225759872041104
 GameObject:
   m_ObjectHideFlags: 0
