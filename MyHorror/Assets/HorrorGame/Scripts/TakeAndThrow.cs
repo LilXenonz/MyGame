@@ -16,10 +16,16 @@ public class TakeAndThrow : MonoBehaviour
 
     public Text InteractionText;
 
+
+    public bool HandIsfull = false;
+
+    public string[] exludeLayer;
+    private int Layermask;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Layermask = ~LayerMask.GetMask(exludeLayer);
     }
 
     // Update is called once per frame
@@ -33,7 +39,7 @@ public class TakeAndThrow : MonoBehaviour
                 Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 5f))
+                if (Physics.Raycast(ray, out hit, 5f, Layermask))
                 {
 
                     if (hit.collider.CompareTag("Throwable"))
@@ -58,6 +64,8 @@ public class TakeAndThrow : MonoBehaviour
 
                             HeldRB.useGravity = false;
                             HeldRB.isKinematic = true;
+
+                            HandIsfull = true;
 
                         }
 
@@ -88,6 +96,9 @@ public class TakeAndThrow : MonoBehaviour
                     HeldObject = null;
                     HeldRB = null;
 
+                    HandIsfull = false;
+
+
                 }
 
                 if (Input.GetMouseButtonDown(0))
@@ -103,6 +114,9 @@ public class TakeAndThrow : MonoBehaviour
 
                     HeldObject = null;
                     HeldRB = null;
+
+                    HandIsfull = false;
+
 
                 }
 
