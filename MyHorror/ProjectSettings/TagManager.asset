@@ -5,6 +5,17 @@ TagManager:
   serializedVersion: 3
   tags:
   - Friend
+  - Pickable
+  - Throwable
+  - PlaceOn
+  - Paper
+  - Door
+  - Cop
+  - NPC
+  - Pan
+  - Eggs
+  - Pepper
+  - Salt
   layers:
   - Default
   - TransparentFX
