@@ -18,6 +18,7 @@ TagManager:
   - Salt
   - CampFire
   - Wood
+  - Bed
   layers:
   - Default
   - TransparentFX
