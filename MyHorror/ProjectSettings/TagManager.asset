@@ -16,6 +16,8 @@ TagManager:
   - Eggs
   - Pepper
   - Salt
+  - CampFire
+  - Wood
   layers:
   - Default
   - TransparentFX
