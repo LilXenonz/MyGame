@@ -19,6 +19,8 @@ TagManager:
   - CampFire
   - Wood
   - Bed
+  - Vehicle
+  - Toilet
   layers:
   - Default
   - TransparentFX
