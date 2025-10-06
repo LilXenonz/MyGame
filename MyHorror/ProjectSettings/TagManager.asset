@@ -21,6 +21,7 @@ TagManager:
   - Bed
   - Vehicle
   - Toilet
+  - FlashLight
   layers:
   - Default
   - TransparentFX
