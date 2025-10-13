@@ -478,6 +478,10 @@ MonoBehaviour:
       Key: title.scrap
     - Id: 38802640
       Key: description.scrap
+    - Id: 56098932
+      Key: title.crucifix
+    - Id: 50886503
+      Key: description.crucifix
   - Id: 90694169
     SectionName: tips
     SectionSheet:

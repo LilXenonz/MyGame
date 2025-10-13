@@ -933,6 +933,14 @@ MonoBehaviour:
     SectionId: 24283221
     Key: item.description.scrap
     Value: A collection of miscellaneous metal pieces. Useful for crafting and repairs.
+  - EntryId: 56098932
+    SectionId: 24283221
+    Key: item.title.crucifix
+    Value: Crucifix
+  - EntryId: 50886503
+    SectionId: 24283221
+    Key: item.description.crucifix
+    Value: A cross found in the depths of the sand
   - EntryId: 31030455
     SectionId: 90694169
     Key: tips.tip1

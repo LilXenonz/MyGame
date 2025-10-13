@@ -1,0 +1,120 @@
+{
+  "id": "1cca2cb4c899442d96e9dc4cb04f7f62",
+  "playerData": {
+    "position": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": -3.7
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "localData": {
+      "health": 85,
+      "selectedItem": -1,
+      "playerItems": {
+        "playerItem_0": {
+          "recordingTime": 0,
+          "batteryEnergy": 100.0,
+          "nightVision": false
+        },
+        "playerItem_1": {},
+        "playerItem_2": {},
+        "playerItem_3": {
+          "flashlightAttached": false
+        },
+        "playerItem_4": {
+          "batteryEnergy": 320.0
+        },
+        "playerItem_5": {
+          "currentFuel": 60.0
+        },
+        "playerItem_6": {},
+        "playerItem_7": {},
+        "playerItem_8": {
+          "baseTemp": 23.0
+        },
+        "playerItem_9": {}
+      }
+    },
+    "globalData": {
+      "inventory": {
+        "expanded": 0,
+        "items": {},
+        "shortcuts": {
+          "shortcut_0": "{}",
+          "shortcut_1": "{}",
+          "shortcut_2": "{}",
+          "shortcut_3": "{}"
+        }
+      },
+      "objectives": {}
+    }
+  },
+  "worldState": {
+    "worldSaveables": {
+      "DraggableItem.3592f905be2ce964da3ac93c31780bb4": {
+        "position": {
+          "x": -4.617,
+          "y": -57.1664963,
+          "z": -0.15700005
+        },
+        "rotation": {
+          "x": 270.0,
+          "y": 5.15903121E-05,
+          "z": 0.0
+        }
+      },
+      "NPCHealth.935102f0d4a91a547bbed78154ef3453": {
+        "position": {
+          "x": -17.61598,
+          "y": -58.9676666,
+          "z": -1.24354708
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 177.895142,
+          "z": 0.0
+        },
+        "health": 100
+      },
+      "TimedInteractEvent.1e09225ef6ce11b49ad9d49c832bdb90": {
+        "interactOnce": false,
+        "isInteractTimed": false
+      },
+      "ElevatorSystem.ad59ee2b1ccfa1844b43b6a9e3965665": {
+        "floor": 2
+      },
+      "TimedInteractEvent.4d6ca39e92a918143b8c9b5a7c32d22a": {
+        "interactOnce": false,
+        "isInteractTimed": false
+      },
+      "SaveableObject.bda2f706df5b5c0479a0943d8ad09234": {
+        "position": {
+          "x": 0.0,
+          "y": -29.0,
+          "z": -2.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      },
+      "DraggableItem.2e7557750f3759548a1a8a7f9c9a0b9d": {
+        "position": {
+          "x": -4.539,
+          "y": -57.1664963,
+          "z": -0.421
+        },
+        "rotation": {
+          "x": 270.0,
+          "y": 319.823547,
+          "z": 0.0
+        }
+      }
+    },
+    "runtimeSaveables": {}
+  }
+}

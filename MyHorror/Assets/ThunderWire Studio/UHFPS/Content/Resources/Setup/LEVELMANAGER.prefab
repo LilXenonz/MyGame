@@ -758,28 +758,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelInfos:
-  - SceneName: Playground
+  - SceneName: Opening
     Title:
-      GlocText: '*Playground'
+      GlocText: The Start
       NormalText: 
     Description:
-      GlocText: loading.description.demoscene
-      NormalText: 
-    Background: {fileID: 21300000, guid: e7f10cde980abee4ba445d1f897bb00f, type: 3}
-  - SceneName: Elevator
-    Title:
-      GlocText: '*Elevator'
-      NormalText: 
-    Description:
-      GlocText: loading.description.demoscene2
-      NormalText: 
-    Background: {fileID: 21300000, guid: 409066486ffec0e4982d0cad8dd39fed, type: 3}
-  - SceneName: Raining
-    Title:
-      GlocText: '*Raining'
-      NormalText: 
-    Description:
-      GlocText: loading.description.demoscene3
+      GlocText: Spooky Desert
       NormalText: 
     Background: {fileID: 21300000, guid: 8a90b4371d5d5b6458c58d448a0e4d7e, type: 3}
   Title: {fileID: 7137861545701340859}
