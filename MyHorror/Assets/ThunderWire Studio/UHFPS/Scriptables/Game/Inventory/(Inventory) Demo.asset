@@ -437,6 +437,44 @@ MonoBehaviour:
           NormalText: Detects electromagnetic fields. Essential for identifying paranormal
             activity or electronic disturbances. A must-have for ghost hunters and
             investigators.
+    - GUID: 7e78c58b15ac4f5493dc55498cdaaca2
+      SectionGUID: d96703d3846a4320840b6f588ab43050
+      Title: AK-47
+      Description: A AK-47.....
+      Width: 3
+      Height: 2
+      Orientation: 0
+      FlipDirection: 0
+      Icon: {fileID: -1432915963, guid: 202332ecc4f84644cb932b9d02c85c2b, type: 3}
+      ItemObject:
+        GUID: 
+        Object: {fileID: 0}
+      Settings:
+        isUsable: 1
+        isStackable: 0
+        isExaminable: 0
+        isCombinable: 0
+        isDroppable: 0
+        isDiscardable: 0
+        canBindShortcut: 0
+        alwaysShowQuantity: 1
+      UsableSettings:
+        usableType: 0
+        playerItemIndex: 10
+        healthPoints: 0
+        removeOnUse: 0
+        customData:
+          JsonData: 
+      Properties:
+        maxStack: 0
+      CombineSettings: []
+      LocalizationSettings:
+        titleKey:
+          GlocText: 
+          NormalText: 
+        descriptionKey:
+          GlocText: 
+          NormalText: 
   - Section:
       Name: Healing Items
       GUID: bc38a49db3da43c8928dfbde7c7d1f1c
@@ -858,6 +896,44 @@ MonoBehaviour:
           GlocText: item.description.pistolammo
           NormalText: Compatible with a variety of firearms. With its compact size
             and high stopping power, 9mm ammo is perfect for close-range combat situations.
+    - GUID: b04e9c86dfcd4e1a8e91df1af64748fa
+      SectionGUID: 401b335b9c9c4c5588e0ec76a2faef23
+      Title: AK-47 Ammo
+      Description: 
+      Width: 2
+      Height: 2
+      Orientation: 0
+      FlipDirection: 0
+      Icon: {fileID: 21300000, guid: d6b61bcc5bbe75f448a355416cdbb876, type: 3}
+      ItemObject:
+        GUID: 
+        Object: {fileID: 0}
+      Settings:
+        isUsable: 0
+        isStackable: 1
+        isExaminable: 0
+        isCombinable: 0
+        isDroppable: 0
+        isDiscardable: 0
+        canBindShortcut: 0
+        alwaysShowQuantity: 1
+      UsableSettings:
+        usableType: 0
+        playerItemIndex: 0
+        healthPoints: 0
+        removeOnUse: 0
+        customData:
+          JsonData: 
+      Properties:
+        maxStack: 99
+      CombineSettings: []
+      LocalizationSettings:
+        titleKey:
+          GlocText: 
+          NormalText: 
+        descriptionKey:
+          GlocText: 
+          NormalText: 
   - Section:
       Name: Attachments
       GUID: 1c8a94e2ba1b4ecea9171599ad9bce5e
