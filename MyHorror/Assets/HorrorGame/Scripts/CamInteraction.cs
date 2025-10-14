@@ -1,7 +1,8 @@
 using System.Collections;
+using UHFPS.Runtime;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.Cinemachine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class CamInteraction : MonoBehaviour
@@ -67,60 +68,61 @@ public class CamInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CanInteraction == true)
+        // if interactions are disabled, clear text and exit quickly
+        if (!CanInteraction)
         {
-            Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
+            InteractionText.text = "";
+            return;
+        }
 
-            if (Physics.Raycast(ray, out hit, InteractionDis))
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, InteractionDis))
+        {
+            GameObject obj = hit.collider.gameObject;
+
+            // 1) Single-click examine objects (left click)
+            if (obj.TryGetComponent<IExamineClick>(out IExamineClick clickTarget))
             {
-                if (hit.collider.CompareTag("NPC"))
+                InteractionText.text = "Examine (Left Click)";
+                if (Input.GetMouseButtonDown(0))
                 {
-                    InteractionText.text = "Talk To Him";
-
-                    //talk
-
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        CanInteraction = false;
-
-
-                        //progressbar  
-
-                        ProgressBarScript.TalkNpcProgress();
-
-                        //progressbar  
-
-
-                        //StartCoroutine(TalkToNPC());
-                    }
-                }
-                else if (hit.collider.CompareTag("Cop"))
-                {
-                    InteractionText.text = "Talk To Cop";
-
-                    //talk
-
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        CanInteraction = false;
-                        StartCoroutine(TalkToCop());
-                    }
-                }
-
-                else
-                {
-                    InteractionText.text = "";
-
+                    clickTarget.OnExamineClick();
                 }
             }
+            // 4) Keep your existing NPC and Cop tag checks as fallback
+            else if (hit.collider.CompareTag("NPC"))
+            {
+                InteractionText.text = "Talk To Him";
 
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    CanInteraction = false;
+                    // progressbar  
+                    ProgressBarScript.TalkNpcProgress();
+                    //StartCoroutine(TalkToNPC());
+                }
+            }
+            else if (hit.collider.CompareTag("Cop"))
+            {
+                InteractionText.text = "Talk To Cop";
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    CanInteraction = false;
+                    StartCoroutine(TalkToCop());
+                }
+            }
             else
             {
                 InteractionText.text = "";
             }
         }
-
+        else
+        {
+            InteractionText.text = "";
+        }
     }
 
     IEnumerator TalkToCop()
