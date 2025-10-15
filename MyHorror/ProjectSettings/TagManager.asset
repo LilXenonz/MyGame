@@ -5,6 +5,25 @@ TagManager:
   serializedVersion: 3
   tags:
   - Flesh
+  - Pizza
+  - Eggs
+  - Pickable
+  - Throwable
+  - PlaceOn
+  - Paper
+  - Wood
+  - CampFire
+  - Door
+  - Pepper
+  - FlashLight
+  - Toilet
+  - Bed
+  - Friend
+  - Pan
+  - Salt
+  - NPC
+  - Cop
+  - Note
   layers:
   - Default
   - TransparentFX

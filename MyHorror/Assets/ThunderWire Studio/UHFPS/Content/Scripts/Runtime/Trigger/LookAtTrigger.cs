@@ -29,6 +29,7 @@ namespace UHFPS.Runtime
         private void Awake()
         {
             playerPresence = PlayerPresenceManager.Instance;
+            Debug.Log(playerPresence.PlayerCamera);
         }
 
         private void Update()

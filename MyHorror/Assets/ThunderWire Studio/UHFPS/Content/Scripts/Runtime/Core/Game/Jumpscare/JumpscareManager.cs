@@ -63,7 +63,6 @@ namespace UHFPS.Runtime
             gameManager = GetComponent<GameManager>();
 
             playerManager = playerPresence.PlayerManager;
-            lookController = playerPresence.LookController;
             jumpscareDirect = playerManager.GetComponent<JumpscareDirect>();
             fearTentancles = gameManager.GetStack<FearTentancles>();
         }

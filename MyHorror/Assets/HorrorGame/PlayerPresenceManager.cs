@@ -52,7 +52,6 @@ namespace UHFPS.Runtime
         }
 
         public PlayerStateMachine StateMachine => PlayerManager.PlayerStateMachine;
-        public LookController LookController => PlayerManager.LookController;
 
         /// <summary>
         /// Check if player is unlocked and the active camera is player camera.
@@ -108,7 +107,6 @@ namespace UHFPS.Runtime
         public void FreezeLook(bool freeze, bool showCursor = false)
         {
             GameTools.ShowCursor(!showCursor, showCursor);
-            LookController.SetEnabled(!freeze);
         }
 
         public void FreezePlayer(bool freeze, bool showCursor = false)
@@ -147,22 +145,20 @@ namespace UHFPS.Runtime
             PlayerIsUnlocked = true;
         }
 
-        public (Vector3 position, Vector2 rotation) GetPlayerTransform()
+        /*public (Vector3 position, Vector2 rotation) GetPlayerTransform()
         {
-            return (Player.transform.position, LookController.LookRotation);
-        }
+            //return (Player.transform.position, LookController.LookRotation);
+        }*/
 
         public void SetPlayerTransform(Vector3 position, Vector2 rotation)
         {
             Player.transform.SetPositionAndRotation(position, Quaternion.identity);
-            LookController.LookRotation = rotation;
             Physics.SyncTransforms(); // sync position to character controller
         }
 
         public void SetPlayerPositionAndLook(Vector3 position, Vector2 eulerLook)
         {
             Player.transform.SetPositionAndRotation(position, Quaternion.identity);
-            LookController.ApplyEulerLook(eulerLook);
             Physics.SyncTransforms(); // sync position to character controller
         }
 
@@ -185,7 +181,6 @@ namespace UHFPS.Runtime
         {
             Player.transform.SetPositionAndRotation(position, Quaternion.identity);
             StateMachine.PlayerCollider.enabled = colliderState;
-            LookController.ApplyEulerLook(eulerLook);
 
             // sync position to character controller
             if (colliderState) Physics.SyncTransforms();

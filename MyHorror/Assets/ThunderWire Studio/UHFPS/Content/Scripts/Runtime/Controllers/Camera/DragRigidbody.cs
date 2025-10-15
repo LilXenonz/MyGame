@@ -216,12 +216,10 @@ namespace UHFPS.Runtime
                     holdRotatePoint.transform.Rotate(VirtualCamera.transform.right, delta.y, Space.World);
                 }
 
-                LookController.SetEnabled(false);
                 isRotating = true;
             }
             else if (isRotating)
             {
-                LookController.SetEnabled(true);
                 isRotating = false;
             }
 
@@ -295,7 +293,6 @@ namespace UHFPS.Runtime
 
             if (isRotating)
             {
-                LookController.SetEnabled(true);
                 isRotating = false;
             }
 

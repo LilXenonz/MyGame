@@ -11,12 +11,10 @@ namespace UHFPS.Runtime
         public void OnCharacterControllerEnter(CharacterController controller)
         {
             Transform parent = Parent != null ? Parent : transform;
-            PlayerManager.Instance.ParentToObject(parent);
         }
 
         public void OnCharacterControllerExit()
         {
-            PlayerManager.Instance.UnparentFromObject();
         }
     }
 }

@@ -672,11 +672,8 @@ namespace UHFPS.Runtime
             if (PlayerManager.MainVirtualCamera != null)
             {
                 Vector3 camForward = PlayerManager.MainVirtualCamera.transform.forward;
-                Vector3 lookForward = LookController.RotationX * Vector3.forward;
-                Vector3 lookRotation = Application.isPlaying ? lookForward : camForward;
                 
                 Gizmos.color = Color.red;
-                GizmosE.DrawGizmosArrow(ControllerFeet, lookRotation * 0.5f);
             }
 
             Gizmos.color = Color.white;
@@ -695,12 +692,8 @@ namespace UHFPS.Runtime
                 {
                     float height = Controller.height;
                     Vector3 scale = (0.73f + ScaleOffset) * height * Vector3.one;
-                    Quaternion lookRotation = Application.isPlaying ? LookController.RotationX : transform.rotation;
-                    Quaternion rotation = lookRotation * Quaternion.Euler(-90, 0, 0);
 
                     Gizmos.color = GizmosColor.Alpha(0.1f);
-                    if(DrawPlayerWireframe) Gizmos.DrawWireMesh(playerGizmos, transform.position, rotation, scale);
-                    else Gizmos.DrawMesh(playerGizmos, transform.position, rotation, scale);
                 }
             }
         }

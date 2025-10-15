@@ -438,9 +438,7 @@ namespace UHFPS.Runtime
             }
             else
             {
-                var (position, rotation) = playerPresence.GetPlayerTransform();
-                worldStatePlayerData.Add("position", position.ToSaveable());
-                worldStatePlayerData.Add("rotation", rotation.ToSaveable());
+                
             }
 
             // add player data to player data buffer

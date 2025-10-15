@@ -37,7 +37,6 @@ namespace UHFPS.Runtime
 
         public CharacterController PlayerCollider => PlayerManager.PlayerCollider;
         public PlayerStateMachine PlayerStateMachine => PlayerManager.PlayerStateMachine;
-        public LookController LookController => PlayerManager.LookController;
         public ExamineController ExamineController => PlayerManager.ExamineController;
 
         public Camera MainCamera => PlayerManager.MainCamera;

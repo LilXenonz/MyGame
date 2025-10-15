@@ -50,7 +50,6 @@ namespace UHFPS.Runtime
 
             controller = component.PlayerCollider;
             player = component.PlayerStateMachine;
-            look = component.LookController;
 
             motionBlender.Disposables.Add(player.ObservableState.Subscribe(OnStateChange));
         }

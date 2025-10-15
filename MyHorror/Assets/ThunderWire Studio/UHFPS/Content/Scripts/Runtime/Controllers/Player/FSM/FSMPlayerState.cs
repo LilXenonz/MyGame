@@ -94,7 +94,6 @@ namespace UHFPS.Runtime
             playerItems = machine.PlayerManager.PlayerItems;
             cameraHolder = machine.PlayerManager.CameraHolder;
             motionController = machine.PlayerManager.MotionController;
-            cameraLook = machine.LookController;
             footstepsSystem = machine.GetComponent<FootstepsSystem>();
             Transitions = OnGetTransitions();
         }

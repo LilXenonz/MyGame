@@ -70,18 +70,6 @@ namespace UHFPS.Runtime
             }
         }
 
-        private LookController m_lookController;
-        public LookController LookController
-        {
-            get
-            {
-                if (m_lookController == null)
-                    m_lookController = GetComponentInChildren<LookController>();
-
-                return m_lookController;
-            }
-        }
-
         private ExamineController m_examineController;
         public ExamineController ExamineController
         {
@@ -118,44 +106,8 @@ namespace UHFPS.Runtime
             }
         }
 
-        private void Start()
-        {
-            if (!SaveGameManager.GameWillLoad || !SaveGameManager.GameStateExist)
-            {
-                // transfer player rotation to look rotation
-                Vector3 rotation = transform.eulerAngles;
-                if(LookController.PlayerForward == LookController.ForwardStyle.LookForward)
-                    transform.rotation = Quaternion.identity;
-                LookController.LookRotation.x = rotation.y;
-            }
-        }
+     
 
-        private void Update()
-        {
-            // keep the player rotation unchanged when PlayerForward is set to LookForward
-            if (LookController.PlayerForward == LookController.ForwardStyle.LookForward)
-                transform.rotation = Quaternion.identity;
-        }
-
-        /// <summary>
-        /// Parent player to object.
-        /// </summary>
-        public void ParentToObject(Transform parent, bool autoSync = true)
-        {
-            Physics.autoSyncTransforms = autoSync;
-            LookController.ParentToObject(parent);
-            transform.SetParent(parent);
-        }
-
-        /// <summary>
-        /// Unparent player from object.
-        /// </summary>
-        public void UnparentFromObject()
-        {
-            Physics.autoSyncTransforms = false;
-            LookController.UnparentFromObject();
-            transform.SetParent(null);
-        }
 
         /// <summary>
         /// This function is used to collect all local player data to be saved.

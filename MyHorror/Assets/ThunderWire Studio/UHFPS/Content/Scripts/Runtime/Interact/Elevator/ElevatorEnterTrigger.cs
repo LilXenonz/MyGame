@@ -21,7 +21,6 @@ namespace UHFPS.Runtime
             if (other.CompareTag("Player"))
             {
                 elevatorSystem.OnElevatorTriggerEnter(true);
-                PlayerManager.Instance.ParentToObject(ElevatorParent);
             }
         }
 
@@ -30,7 +29,6 @@ namespace UHFPS.Runtime
             if (other.CompareTag("Player"))
             {
                 elevatorSystem.OnElevatorTriggerEnter(false);
-                PlayerManager.Instance.UnparentFromObject();
             }
         }
     }
