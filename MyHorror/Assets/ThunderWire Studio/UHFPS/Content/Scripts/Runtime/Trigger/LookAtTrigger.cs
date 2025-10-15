@@ -29,7 +29,6 @@ namespace UHFPS.Runtime
         private void Awake()
         {
             playerPresence = PlayerPresenceManager.Instance;
-            Debug.Log(playerPresence.PlayerCamera);
         }
 
         private void Update()
@@ -45,18 +44,21 @@ namespace UHFPS.Runtime
                 inDistance = distance <= TriggerDistance;
             }
 
-            if(inDistance && !Physics.Linecast(transform.position, cameraTransform.position, CullMask))
+            if (inDistance && !Physics.Linecast(transform.position, cameraTransform.position, CullMask))
             {
                 Vector3 screenPoint = playerCamera.WorldToViewportPoint(transform.position);
-                if(screenPoint.x >= 0 && screenPoint.x <= 1 && screenPoint.y >= 0 && screenPoint.y <= 1 && screenPoint.z > 0)
+
+                if (screenPoint.x >= 0 && screenPoint.x <= 1 &&
+                    screenPoint.y >= 0 && screenPoint.y <= 1 &&
+                    screenPoint.z > 0)
                 {
                     float xMin = 1 - Remap(ViewportOffset.x);
                     float xMax = Remap(ViewportOffset.x);
-
                     float yMin = 1 - Remap(ViewportOffset.y);
                     float yMax = Remap(ViewportOffset.y);
 
-                    if (screenPoint.x >= xMin && screenPoint.x <= xMax && screenPoint.y >= yMin && screenPoint.y <= yMax)
+                    if (screenPoint.x >= xMin && screenPoint.x <= xMax &&
+                        screenPoint.y >= yMin && screenPoint.y <= yMax)
                     {
                         if (!isLookedOnce)
                         {
@@ -71,20 +73,16 @@ namespace UHFPS.Runtime
                         resetLook = true;
 
                         if (TriggerType == TriggerTypeEnum.MoreTimes)
-                        {
                             isLookedOnce = false;
-                        }
                     }
                 }
-                else if(!LookAwayViewport && isLookedOnce && !resetLook)
+                else if (!LookAwayViewport && isLookedOnce && !resetLook)
                 {
                     OnLookAway?.Invoke();
                     resetLook = true;
 
                     if (TriggerType == TriggerTypeEnum.MoreTimes)
-                    {
                         isLookedOnce = false;
-                    }
                 }
             }
             else if (TriggerType == TriggerTypeEnum.MoreTimes)
@@ -104,7 +102,7 @@ namespace UHFPS.Runtime
 
         private void OnDrawGizmosSelected()
         {
-            if (!UseDistance || !VisualizeDistance) 
+            if (!UseDistance || !VisualizeDistance)
                 return;
 
 #if UNITY_EDITOR

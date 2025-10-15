@@ -63,6 +63,8 @@ namespace UHFPS.Runtime
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log("enterd");
+
             if (TriggerType == TriggerTypeEnum.Event)
                 return;
 

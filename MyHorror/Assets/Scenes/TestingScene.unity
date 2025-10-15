@@ -1486,7 +1486,6 @@ GameObject:
   - component: {fileID: 105323495}
   - component: {fileID: 105323498}
   - component: {fileID: 105323497}
-  - component: {fileID: 105323496}
   m_Layer: 0
   m_Name: Cube_2
   m_TagString: Untagged
@@ -1509,27 +1508,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1873438190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &105323496
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105323494}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.0000001, z: 1.0000001}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &105323497
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1791,40 +1769,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 680502690}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &127074095
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 127074096}
-  m_Layer: 0
-  m_Name: Jumpscare Props
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &127074096
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127074095}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1057679092}
-  - {fileID: 1257080492}
-  - {fileID: 1283731776}
-  m_Father: {fileID: 1178617742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &137960411
 GameObject:
@@ -2838,7 +2782,7 @@ GameObject:
   - component: {fileID: 200069839}
   - component: {fileID: 200069841}
   - component: {fileID: 200069840}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Trigger_LookAt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2854,7 +2798,7 @@ Transform:
   m_GameObject: {fileID: 200069838}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.900024, y: 2, z: 25.3}
+  m_LocalPosition: {x: 31.900024, y: 2, z: 28.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2913,8 +2857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpscareType: 0
-  DirectType: 1
-  TriggerType: 0
+  DirectType: 0
+  TriggerType: 1
   JumpscareImage: {fileID: 21300000, guid: e9c60dc9b64e7fa42b7c0057dd2dba8d, type: 3}
   JumpscareModelID: scare_zombie
   JumpscareSound:
@@ -2932,7 +2876,7 @@ MonoBehaviour:
   LookAtDuration: 0
   LockPlayer: 0
   EndJumpscareWithEvent: 0
-  InfluenceWobble: 1
+  InfluenceWobble: 0
   WobbleAmplitudeGain: 0.65
   WobbleFrequencyGain: 15
   WobbleDuration: 1
@@ -5844,7 +5788,6 @@ GameObject:
   - component: {fileID: 522091064}
   - component: {fileID: 522091067}
   - component: {fileID: 522091066}
-  - component: {fileID: 522091065}
   m_Layer: 0
   m_Name: Cube_1
   m_TagString: Untagged
@@ -5867,27 +5810,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2116867213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &522091065
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522091063}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.0000001, z: 1.0000001}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &522091066
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13094,6 +13016,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 392397045}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &783334056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783334057}
+  m_Layer: 0
+  m_Name: 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &783334057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783334056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1572021849}
+  - {fileID: 1127161658}
+  - {fileID: 1057679092}
+  m_Father: {fileID: 848825688}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &785296427
 GameObject:
   m_ObjectHideFlags: 0
@@ -14078,6 +14034,7 @@ Transform:
   - {fileID: 1178617742}
   - {fileID: 2116867213}
   - {fileID: 1873438190}
+  - {fileID: 783334057}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &852642352
@@ -16243,13 +16200,13 @@ Transform:
   m_GameObject: {fileID: 1057679091}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: 27.240433, y: 0, z: 32.100002}
+  m_LocalPosition: {x: 27.240417, y: 0, z: 32.100002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 591645541}
   - {fileID: 22690313}
-  m_Father: {fileID: 127074096}
+  m_Father: {fileID: 783334057}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!136 &1057679093
 CapsuleCollider:
@@ -17363,7 +17320,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1178617742}
+  m_Father: {fileID: 783334057}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1127161659
 MonoBehaviour:
@@ -17999,9 +17956,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1375319794}
-  - {fileID: 1572021849}
-  - {fileID: 1127161658}
-  - {fileID: 127074096}
+  - {fileID: 1283731776}
   - {fileID: 200069839}
   m_Father: {fileID: 848825688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18663,8 +18618,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257080490}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 38.486717, y: 0, z: 35.484913}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 38.486694, y: 0, z: 35.484913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18672,7 +18627,7 @@ Transform:
   - {fileID: 358826569}
   - {fileID: 1424688074}
   - {fileID: 571117081}
-  m_Father: {fileID: 127074096}
+  m_Father: {fileID: 1873438190}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &1257080493
 Animator:
@@ -18839,8 +18794,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1283731776}
-  - component: {fileID: 1283731775}
-  - component: {fileID: 1283731774}
   m_Layer: 0
   m_Name: Zombie_Hanging
   m_TagString: Untagged
@@ -18848,43 +18801,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1283731774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283731773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62328228a04f3d34abb267f7e4d84e9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SaveableFlags: 8
-  MeshRenderer: {fileID: 0}
-  References: []
---- !u!95 &1283731775
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283731773}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: bfa37afb84864e74da37894759af438e, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1283731776
 Transform:
   m_ObjectHideFlags: 0
@@ -18901,7 +18817,7 @@ Transform:
   - {fileID: 1843621519}
   - {fileID: 213681762}
   - {fileID: 1158937779}
-  m_Father: {fileID: 127074096}
+  m_Father: {fileID: 1178617742}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1287540104
 GameObject:
@@ -20238,7 +20154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f7c3d9d6e7bf749983c3636437ff0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraHolder: {fileID: 0}
+  CameraHolder: {fileID: 1318912827}
   MainCamera: {fileID: 1317379387}
   MainVirtualCamera: {fileID: 1323335966}
   LoadSelectedItem: 1
@@ -23345,7 +23261,6 @@ GameObject:
   - component: {fileID: 1572021849}
   - component: {fileID: 1572021852}
   - component: {fileID: 1572021851}
-  - component: {fileID: 1572021850}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -23366,29 +23281,8 @@ Transform:
   m_LocalScale: {x: 0.5, y: 2.7, z: 4.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1178617742}
+  m_Father: {fileID: 783334057}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!65 &1572021850
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1572021848}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.0000001, z: 1.0000001}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1572021851
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25105,10 +24999,9 @@ GameObject:
   - component: {fileID: 1729162455}
   - component: {fileID: 1729162454}
   - component: {fileID: 1729162453}
-  - component: {fileID: 1729162452}
   m_Layer: 6
   m_Name: Paper_D
-  m_TagString: Untagged
+  m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25128,115 +25021,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1375319794}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: -161.58}
---- !u!114 &1729162452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1729162450}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1193cc42578b51349ae91df02822e87c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <UniqueID>k__BackingField:
-    Id: 2b033d94ff76468ea583d7ff8296b94c
-  InteractableType: 2
-  MessageType: 0
-  ExamineType: 1
-  ExamineRotate: 3
-  DisableType: 0
-  PickupItem:
-    m_GUID: 
-    m_Item:
-      Name: 
-      GUID: 
-      Icon: {fileID: 0}
-    m_Section:
-      Name: 
-      GUID: 
-  ItemCustomData:
-    JsonData: 
-  InteractTitle:
-    GlocText: objects.paper
-    NormalText: Paper
-  ExamineTitle:
-    GlocText: 
-    NormalText: 
-  PaperText:
-    GlocText: papers.bloody
-    NormalText: 'This is an example text for a paper to demonstrate the examination
-      system. You can display the text on the paper using a texture or rewrite the
-      text as paper examination text.
-
-
-      - From Patrick'
-  HintMessage:
-    GlocText: 
-    NormalText: 
-  MessageTime: 3
-  Quantity: 1
-  SlotsToExpand: 1
-  ExpandRows: 0
-  UseInventoryTitle: 0
-  ExamineInventoryTitle: 0
-  ShowExamineTitle: 0
-  ShowFloatingIcon: 0
-  TakeFromExamine: 0
-  AllowCursorExamine: 0
-  IsPaper: 1
-  AutoShortcut: 0
-  AutoEquip: 0
-  UseExamineZooming: 1
-  ExamineZoomLimits:
-    min: 0.35
-    max: 0.45
-  ExamineDistance: 0.45
-  UseFaceRotation: 1
-  FaceRotation: {x: 0, y: 180, z: 0}
-  UseControlPoint: 1
-  ControlPoint: {x: 0, y: 0.1, z: 0}
-  CollidersEnable: []
-  CollidersDisable: []
-  ExamineHotspot:
-    HotspotTransform: {fileID: 0}
-    Enabled: 1
-    ResetHotspot: 0
-    HotspotAction:
-      m_PersistentCalls:
-        m_Calls: []
-  PickupSound:
-    audioClip: {fileID: 0}
-    volume: 0
-  ExamineSound:
-    audioClip: {fileID: 8300000, guid: 00f3f82227f7f0045b00e3de46939013, type: 3}
-    volume: 0.6
-  ExamineHintSound:
-    audioClip: {fileID: 0}
-    volume: 0
-  OnTakeEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnExamineStartEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 200069838}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnExamineEndEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  IsExamined: 0
 --- !u!65 &1729162453
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26550,6 +26334,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 105323495}
+  - {fileID: 1257080492}
   - {fileID: 154354895}
   m_Father: {fileID: 848825688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
