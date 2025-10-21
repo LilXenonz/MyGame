@@ -1,5 +1,4 @@
 using System.Collections;
-using UHFPS.Runtime;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,17 +81,8 @@ public class CamInteraction : MonoBehaviour
         {
             GameObject obj = hit.collider.gameObject;
 
-            // 1) Single-click examine objects (left click)
-            if (obj.TryGetComponent<IExamineClick>(out IExamineClick clickTarget))
-            {
-                InteractionText.text = "Examine (Left Click)";
-                if (Input.GetMouseButtonDown(0))
-                {
-                    clickTarget.OnExamineClick();
-                }
-            }
-            // 4) Keep your existing NPC and Cop tag checks as fallback
-            else if (hit.collider.CompareTag("NPC"))
+            
+            if (hit.collider.CompareTag("NPC"))
             {
                 InteractionText.text = "Talk To Him";
 
