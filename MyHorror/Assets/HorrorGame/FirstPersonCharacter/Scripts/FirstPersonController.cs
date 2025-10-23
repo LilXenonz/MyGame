@@ -44,8 +44,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
         
-        private bool m_BlockLook = false;
+        public bool m_BlockLook = false;
+        public bool m_BlockMovement = false;
         private Coroutine m_LerpCoroutine = null;
+
 
         // Use this for initialization
         private void Start()
@@ -208,6 +210,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void GetInput(out float speed)
         {
+
+            if (m_BlockMovement)
+            {
+                m_Input = Vector2.zero;
+                speed = 0f;
+                return;
+            }
+
             // Read input
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");

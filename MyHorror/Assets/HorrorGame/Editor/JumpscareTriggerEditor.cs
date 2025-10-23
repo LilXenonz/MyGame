@@ -74,6 +74,7 @@ public class JumpscareTriggerEditor : InspectorEditor<JumpscareTrigger>
                     }
 
                     Properties.Draw("JumpscareSound");
+                    Properties.Draw("Source");
                 }
 
                 EditorGUILayout.Space(1f);

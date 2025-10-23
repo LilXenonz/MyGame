@@ -20,7 +20,9 @@ public class GameManager : Singleton<GameManager>
     public void FreezePlayer(bool state, bool showCursor = false, bool lockInput = true)
     {  
 
-        FPSController.enabled = !state;
+        FPSController.m_BlockLook = state;
+        FPSController.m_BlockMovement = state;
+
 
         if (lockInput)
         {
