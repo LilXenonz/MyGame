@@ -73,6 +73,23 @@ mono_crash.*
 *.unitypackage.meta
 *.app
 
+# Lighting and baked data
+/[Aa]ssets/**/[Ll]ightmap*/ 
+/[Aa]ssets/**/[Bb]akedData/
+/[Aa]ssets/**/[Ll]ightingData*.asset
+/[Aa]ssets/**/[Oo]cclusionCullingData*.asset
+/[Aa]ssets/**/[Oo]cclusionBakeSettings*.asset
+/[Aa]ssets/**/[Rr]eflectionProbe-*.exr
+
+# GI cache (very large)
+Library/GICache/
+Library/Bee/
+Library/ShaderCache/
+
+# Optional: Light probes and reflection data
+/[Aa]ssets/**/[Ll]ightProbes.asset
+/[Aa]ssets/**/[Rr]eflectionProbes.asset
+
 # Crashlytics generated file
 crashlytics-build.properties
 
