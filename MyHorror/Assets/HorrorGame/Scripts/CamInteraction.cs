@@ -3,372 +3,126 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CamInteraction : MonoBehaviour
 {
 
-    //Loockat check
-
-    public bool TalkToNpcBool = false;
-    public bool TalkToCopBool = false;
-
-    //Loockat check
 
     public LookAtFunc lookAtFunc;
-
     public Text InteractionText;
-
     private float InteractionDis = 5f;
 
-    public bool CanInteraction = true;
+    [Header("Interact Settings")]
+    [Tooltip("Distance of ray to interact")]
+    public float rayDistance;
+    [Tooltip("Layers to interact (default as obstacle)")]
+    public LayerMask interactLayers;
+    [Tooltip("Tags for interact")]
+    public string interactTag;
+    [Tooltip("Inventory script")]
+    public Inventory inventory;
+    [Header("UI Settings")]
+    [Tooltip("UI interactButton for mobile only")]
+    public Image interactButton;
+    private FirstPersonController player;
 
-
-    //look at
-
-    public CinemachineCamera PlayerCam;
-    public CinemachineCamera TalkNpcCam;
-    public CinemachineCamera CopZoomCam;
-
-    public FirstPersonController FpsController;
-    //look at
-
-
-    //talk
-
-    public GameObject TalkPanel;
-    public GameObject ChoicePack;
-    public Text SubText;
-    string holder;
-    float time = 0.05f;
-
-    //talk
-
-    //audio
-
-    public AudioSource TalkSrc;
-
-    //audio
-
-
-    //prograssbar
-
-    public ProgressBar ProgressBarScript;
-
-    //prograssbar
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        
+        player = inventory.gameObject.GetComponent<FirstPersonController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // if interactions are disabled, clear text and exit quickly
-        if (!CanInteraction)
+        if (RayCastCheck() != null)
         {
-            InteractionText.text = "";
-            return;
+            InteractionText.text = "PREES E";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                /*if (RayCastCheck().GetComponent<InteractCallEvent>())
+                {
+                    RayCastCheck().GetComponent<InteractCallEvent>().InteractCall();
+                }*/
+                
+                  if (RayCastCheck().GetComponent<Item>())
+                {
+                    AudioSource.PlayClipAtPoint(RayCastCheck().GetComponent<Item>().pickupSound, transform.position);
+                    inventory.AddItem(RayCastCheck().GetComponent<Item>().itemID, RayCastCheck());
+
+                }
+                //else
+                /*if (RayCastCheck().GetComponent<Lock>())
+                {
+                    if (inventory.CurrentItemID == RayCastCheck().GetComponent<Lock>().needItem)
+                    {
+                        if (!RayCastCheck().GetComponent<Lock>().isOpen)
+                        {
+                            if (RayCastCheck().GetComponent<Lock>().removeAfterOpen)
+                            {
+                                inventory.RemoveItem();
+                            }
+
+                            if (RayCastCheck().GetComponent<Lock>().playItemAnim)
+                            {
+                                player.inventory.PlayItemAnim(RayCastCheck().GetComponent<Lock>().itemAnimation);
+                            }
+                            RayCastCheck().GetComponent<Lock>().UnlockLock();
+                        }
+                    }
+
+                }*/
+
+                /*else
+                if (RayCastCheck().GetComponent<DoorSiders>())
+                {
+                    if (!RayCastCheck().GetComponent<DoorSiders>().genDoor.locked)
+                    {
+                        RayCastCheck().GetComponent<DoorSiders>().InteractWithDoor();
+                    }
+                    else
+                    {
+                        if (inventory.CurrentItemID == RayCastCheck().GetComponent<DoorSiders>().genDoor.keyID)
+                        {
+                            inventory.RemoveItem();
+                            RayCastCheck().GetComponent<DoorSiders>().genDoor.UnlockDoor();
+                        }
+                        else 
+                        {
+                            RayCastCheck().GetComponent<DoorSiders>().InteractWithDoor();
+                        }
+
+                    }
+
+                }*/
+            }
+
         }
-
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, InteractionDis))
-        {
-            GameObject obj = hit.collider.gameObject;
-
-            
-            if (hit.collider.CompareTag("NPC"))
-            {
-                InteractionText.text = "Talk To Him";
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    CanInteraction = false;
-                    // progressbar  
-                    ProgressBarScript.TalkNpcProgress();
-                    //StartCoroutine(TalkToNPC());
-                }
-            }
-            else if (hit.collider.CompareTag("Cop"))
-            {
-                InteractionText.text = "Talk To Cop";
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    CanInteraction = false;
-                    StartCoroutine(TalkToCop());
-                }
-            }
             else
             {
                 InteractionText.text = "";
+            } 
+    }
+    
+
+    private GameObject RayCastCheck()
+    {
+        RaycastHit hit;
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+        if (Physics.Raycast(transform.position, fwd, out hit, rayDistance, interactLayers))
+        {
+            if (hit.transform.gameObject.tag == interactTag)
+            {
+                Debug.Log(hit.transform.gameObject.tag);
+                return hit.transform.gameObject;
             }
-        }
-        else
-        {
-            InteractionText.text = "";
-        }
-    }
-
-    IEnumerator TalkToCop()
-    {
-        //chechk bool
-
-        TalkToCopBool = true;
-
-        //chechk bool
 
 
-        InteractionText.text = "";
-        FpsController.enabled = false;
-        CopZoomCam.enabled = true;
-        TalkNpcCam.enabled = false;
-        PlayerCam.enabled = false;
-
-        //look at
-
-        lookAtFunc.IKActive = true;
-
-
-        //look at
-
-        yield return new WaitForSeconds(1f);
-
-        TalkPanel.SetActive(true);
-
-        //audio
-
-        TalkSrc.Play();
-
-        //audio
-
-
-        SubText.text = "Me: ";
-        holder = "Why are you fat?";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
         }
 
-        //audio
-        TalkSrc.Stop();
-        //audio
-
-        yield return MousePressed();
-
-        TalkSrc.Play();
-
-
-        SubText.text = "Cop: ";
-        holder = "I eat a lot of donuts";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        TalkSrc.Stop();
-
-
-        yield return MousePressed();
-
-        StartCoroutine(Final());
-
+        return null;
     }
 
-    public void TalkToNpcVoid()
-    {
-      
-        StartCoroutine(TalkToNPC());
-
-    }
-
-
-    IEnumerator TalkToNPC()
-    {
-
-        //chechk bool
-
-        TalkToNpcBool = true;
-
-        //chechk bool
-
-        InteractionText.text = "";
-        FpsController.enabled = false;
-        TalkNpcCam.enabled = true;
-        PlayerCam.enabled = false;
-        CopZoomCam.enabled= false;
-
-        // look at
-        lookAtFunc.IKActive = true;
-        //look at
-
-        yield return new WaitForSeconds(1f);   
-        
-        //cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        //cursor 
-
-        TalkPanel.SetActive(true);
-
-        //audio
-
-        TalkSrc.Play();
-
-        //audio
-
-
-        SubText.text = "Me: ";
-        holder = "Hello, are you okay ?";
-        foreach(char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        //audio
-        TalkSrc.Stop();
-        //audio
-
-        yield return MousePressed();
-
-        TalkSrc.Play();
-
-
-        SubText.text = "Man: ";
-        holder = "Yes sir";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        TalkSrc.Stop();
-
-
-        yield return MousePressed();
-
-        TalkSrc.Play();
-
-
-        SubText.text = "Man: ";
-        holder = "Are you lost";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        TalkSrc.Stop();
-
-        yield return new WaitForSeconds(1f);
-
-        ChoicePack.SetActive(true);
-
-
-        //Reset
-
-        ProgressBarScript.ResetProgressBar();
-
-        //Reset
-        
-    }
-
-    public void Choice1Func()
-    {
-        StartCoroutine(Choise1());
-    }
-    public void Choice2Func()
-    {
-        StartCoroutine(Choise2());
-    }
-
-    IEnumerator Choise1()
-    {
-        ChoicePack.SetActive(false);
-
-        TalkSrc.Play();
-
-
-        SubText.text = "Me: ";
-        holder = "No, im from here";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        TalkSrc.Stop();
-
-        yield return new WaitForSeconds(3f);
-
-        StartCoroutine(Final());
-    }
-    IEnumerator Choise2()
-    {
-
-        ChoicePack.SetActive(false);
-
-
-        TalkSrc.Play();
-
-        SubText.text = "Me: ";
-        holder = "Yes, i will ask for help later";
-        foreach (char c in holder)
-        {
-            SubText.text += c;
-            yield return new WaitForSeconds(time);
-        }
-
-        TalkSrc.Stop();
-
-        yield return new WaitForSeconds(3f);
-
-        StartCoroutine(Final());
-
-    }
-
-    IEnumerator Final() 
-    {
-        //chechk bool
-
-        TalkToCopBool = false;
-        TalkToNpcBool = false;
-
-        //chechk bool
-
-        TalkPanel.SetActive(false);
-        ChoicePack.SetActive(false);
-        SubText.text = "";
-
-        //look at
-        lookAtFunc.IKActive = false;
-        //look at
-
-        FpsController.enabled = true;
-        PlayerCam.enabled = true;
-        TalkNpcCam.enabled = false;
-        CopZoomCam.enabled = false;
-
-        CanInteraction = true;
-
-        yield return null;
-    }
-
-    IEnumerator MousePressed()
-    {
-        while(!Input.GetMouseButtonDown(0))
-        {
-            yield return null;
-        }
-    }
 }
 
 

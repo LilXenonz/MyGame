@@ -66,7 +66,7 @@ public class ProgressBar : MonoBehaviour
 
                     //CamInteract
 
-                    CamInteract.TalkToNpcVoid();
+                    //CamInteract.TalkToNpcVoid();
 
                     //CamInteract
                 }

@@ -28,7 +28,7 @@ public class LookAtFunc : MonoBehaviour
 
             }
 
-            else
+            /*else
             {
                 LookWeight = Mathf.Lerp(LookWeight, 0, Time.deltaTime * 2);
             }
@@ -44,9 +44,9 @@ public class LookAtFunc : MonoBehaviour
             {
                 CopAnimator.SetLookAtPosition(LookAtObj.position);
                 CopAnimator.SetLookAtWeight(LookWeight);
-            }
+            }*/
 
         }
     }
 
-}
+    }
