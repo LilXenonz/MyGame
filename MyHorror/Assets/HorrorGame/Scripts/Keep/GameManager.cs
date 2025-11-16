@@ -114,12 +114,12 @@ public class GameManager : Singleton<GameManager>
 
         if (PlayerPrefs.HasKey("Sensitivity"))
         {
-            player.m_MouseLook.XSensitivity = PlayerPrefs.GetFloat("Sensitivity");
+            player.mouseSensetivity = PlayerPrefs.GetFloat("Sensitivity");
             sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         }
         else
         {
-            player.m_MouseLook.XSensitivity = 50f;
+            player.mouseSensetivity = 50f;
             sensitivitySlider.value = 50f;
         }
 
@@ -215,11 +215,11 @@ public class GameManager : Singleton<GameManager>
     public void Respawn()
     {
         enemy.gameObject.SetActive(true);
-        player.m_MouseLook.clampXaxis.x = 0;
-        player.m_MouseLook.clampXaxis.y = 0;
-        player.m_MouseLook.clampXaxis.x = -90;
-        player.m_MouseLook.clampXaxis.y = 90;
-        player.m_MouseLook.clampByY = false;
+        player.clampXaxis.x = 0;
+        player.clampXaxis.y = 0;
+        player.clampXaxis.x = -90;
+        player.clampXaxis.y = 90;
+        player.clampByY = false;
         player.hidePlace = null;
         player.transform.position = playerSpawnPoint.position;
         player.transform.rotation = playerSpawnPoint.rotation;
@@ -227,7 +227,7 @@ public class GameManager : Singleton<GameManager>
         enemy.transform.rotation = enemySpawnPoint.rotation;
         player.m_BlockLook = false;
         player.m_BlockMovement = false;
-        player.m_Camera.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        player.cameraTransform.transform.localRotation = new Quaternion(0, 0, 0, 0);
         enemy.RestartEnemyStats();
         ScreenFade(0);
 
@@ -308,7 +308,7 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.SetFloat("Volume", volumeSlider.value);
         PlayerPrefs.SetFloat("Sensitivity", sensitivitySlider.value);
         AudioListener.volume = PlayerPrefs.GetFloat("Volume");
-        player.m_MouseLook.XSensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        player.mouseSensetivity = PlayerPrefs.GetFloat("Sensitivity");
 
     }
 }

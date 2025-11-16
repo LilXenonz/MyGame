@@ -51,11 +51,11 @@ public class HidePlace : MonoBehaviour
         float minX = enterPlace.eulerAngles.y + clampCameraX.x;
         float maxX = enterPlace.eulerAngles.y + clampCameraX.y;
 
-        player.m_MouseLook.clampByY = true;
-        player.m_MouseLook.clampYaxis.x = minX;
-        player.m_MouseLook.clampYaxis.y = maxX;
-        player.m_MouseLook.clampXaxis.x = clampCameraY.x;
-        player.m_MouseLook.clampXaxis.y = clampCameraY.y;
+        player.clampByY = true;
+        player.clampYaxis.x = minX;
+        player.clampYaxis.y = maxX;
+        player.clampXaxis.x = clampCameraY.x;
+        player.clampXaxis.y = clampCameraY.y;
 
         if (hidePlaceAnimation)
         {
@@ -76,13 +76,13 @@ public class HidePlace : MonoBehaviour
         float minX = enterPlace.eulerAngles.y;
         float maxX = enterPlace.eulerAngles.y;
 
-        player.m_MouseLook.clampYaxis.x = minX;
-        player.m_MouseLook.clampYaxis.y = maxX;
-        player.m_MouseLook.clampXaxis.x = 0;
-        player.m_MouseLook.clampXaxis.y = 0;
-        player.m_MouseLook.clampXaxis.x = -90;
-        player.m_MouseLook.clampXaxis.y = 90;
-        player.m_MouseLook.clampByY = false;
+        player.clampYaxis.x = minX;
+        player.clampYaxis.y = maxX;
+        player.clampXaxis.x = 0;
+        player.clampXaxis.y = 0;
+        player.clampXaxis.x = -90;
+        player.clampXaxis.y = 90;
+        player.clampByY = false;
 
         player.hidePlace = null;
         player.Hide(0);

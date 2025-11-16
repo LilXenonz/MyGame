@@ -22,69 +22,36 @@ public class FLtakeNthrow : MonoBehaviour
         FlashlightSystem.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EquipLight()
     {
+        /*HeldObject = hit.collider.gameObject;
+        HeldRB = HeldObject.GetComponent<Rigidbody>();
 
+        HeldObject.transform.SetParent(HoldPoint);
+        HeldObject.transform.localPosition = Vector3.zero;
+        HeldObject.transform.localRotation = Quaternion.identity;
 
-        if (CanInteract )
-        {
-            if (HeldObject == null)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                    RaycastHit hit;
+        HeldRB.useGravity = false;
+        HeldRB.isKinematic = true;*/
 
-                    if (Physics.Raycast(ray, out hit, 5f))
-                    {
-                        if(hit.collider.CompareTag("FlashLight"))
-                        {
-                            //pick
-                            HeldObject = hit.collider.gameObject;
-                            HeldRB = HeldObject.GetComponent<Rigidbody>();
+        FlashlightSystem.enabled = true;
+        MovecamHorizontal.enabled = true;
 
-                            HeldObject.transform.SetParent(HoldPoint);
-                            HeldObject.transform.localPosition = Vector3.zero;
-                            HeldObject.transform.localRotation = Quaternion.identity;
+    }
+    public void throwLight()
+    {
+        HeldObject.transform.SetParent(null);
 
-                            HeldRB.useGravity = false;
-                            HeldRB.isKinematic = true;
+        HeldRB.useGravity = true;
 
-                            FlashlightSystem.enabled = true;
-                            MovecamHorizontal.enabled = true;
+        HeldRB.isKinematic = false;
 
-                        }
-                    }
-                }
-            }
-            else
-            {
+        HeldRB.AddForce(Camera.main.transform.forward * force, ForceMode.Impulse);
 
-                if (Input.GetKeyDown(KeyCode.G)) 
-                {
+        HeldObject = null;
+        HeldRB = null;
 
-                    //throw
-
-                    HeldObject.transform.SetParent(null);
-
-                    HeldRB.useGravity = true;
-
-                    HeldRB.isKinematic = false;
-
-                    HeldRB.AddForce(Camera.main.transform.forward * force, ForceMode.Impulse);
-
-                    HeldObject = null;
-                    HeldRB = null;
-
-                    FlashlightSystem.enabled = false;
-                    MovecamHorizontal.enabled = false;
-
-
-                }
-
-
-            }
-        }
+        FlashlightSystem.enabled = false;
+        MovecamHorizontal.enabled = false;
     }
 }

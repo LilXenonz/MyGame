@@ -37,12 +37,12 @@ public class CamInteraction : MonoBehaviour
         if (RayCastCheck() != null)
         {
             InteractionText.text = "PREES E";
-            if (Input.GetKeyDown(KeyCode.E))
+            if (CrossPlatformInputManager.GetButtonDown("Interact"))
             {
-                /*if (RayCastCheck().GetComponent<InteractCallEvent>())
+                if (RayCastCheck().GetComponent<InteractCallEvent>())
                 {
                     RayCastCheck().GetComponent<InteractCallEvent>().InteractCall();
-                }*/
+                }
                 
                   if (RayCastCheck().GetComponent<Item>())
                 {
@@ -50,8 +50,8 @@ public class CamInteraction : MonoBehaviour
                     inventory.AddItem(RayCastCheck().GetComponent<Item>().itemID, RayCastCheck());
 
                 }
-                //else
-                /*if (RayCastCheck().GetComponent<Lock>())
+                else
+                if (RayCastCheck().GetComponent<Lock>())
                 {
                     if (inventory.CurrentItemID == RayCastCheck().GetComponent<Lock>().needItem)
                     {
@@ -70,9 +70,9 @@ public class CamInteraction : MonoBehaviour
                         }
                     }
 
-                }*/
+                }
 
-                /*else
+                else
                 if (RayCastCheck().GetComponent<DoorSiders>())
                 {
                     if (!RayCastCheck().GetComponent<DoorSiders>().genDoor.locked)
@@ -93,7 +93,7 @@ public class CamInteraction : MonoBehaviour
 
                     }
 
-                }*/
+                }
             }
 
         }
