@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -36,6 +37,21 @@ public class CamInteraction : MonoBehaviour
     {
         if (RayCastCheck() != null)
         {
+            GameObject hitObj = RayCastCheck();
+
+            if (hitObj.TryGetComponent<FoodInteractable>(out var foodInteractable))
+            {
+                InteractionText.text = foodInteractable.GetInteractionText();
+            }
+            else if (hitObj.TryGetComponent<Item>(out var itemComp))
+            {
+                InteractionText.text = "PRESS E to take " + (itemComp.itemName ?? "Item");
+            }
+            else
+            {
+                InteractionText.text = "PRESS E";
+            }
+
             InteractionText.text = "PREES E";
             if (CrossPlatformInputManager.GetButtonDown("Interact"))
             {
@@ -93,6 +109,13 @@ public class CamInteraction : MonoBehaviour
 
                     }
 
+                }
+                else 
+                if (hitObj.TryGetComponent<FoodInteractable>(out var food))
+                {
+                    // FoodInteractable.OnInteract will decide behavior (open UI, add to inventory, play sound...)
+                    food.OnInteract();
+                    return;
                 }
             }
 

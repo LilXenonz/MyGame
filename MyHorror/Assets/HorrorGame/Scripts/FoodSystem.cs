@@ -1,206 +1,135 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FoodSystem : MonoBehaviour
 {
-
     public GameObject Canvas;
 
-    public GameObject Pepper;
-    public GameObject Salt;
-
-    public GameObject[] Eggs;
-
     public GameObject[] BrokenEggs;
-
-    private bool CanInteract = true;
-
-    public FoodInventory Inventory;
-
-    public GameObject EggPack;
 
     public Toggle EggsToggle;
     public Toggle SaltToggle;
     public Toggle PepperToggle;
 
     public Text EggsText;
-
-    private bool HandFull = false;
-
     public Text InteractionText;
 
+    public Inventory inventory;
 
-    // Update is called once per frame
-    void Update()
+    // IDs must match your ItemsDatabase / Item components
+    public int eggItemID = 6;
+    public int pepperItemID = 7;
+    public int saltItemID = 8;
+
+    private int eggsPlaced = 0;
+
+    private void Awake()
     {
+        if (inventory == null)
+            inventory = FindObjectOfType<Inventory>();
 
-        if (CanInteract == true)
+        if (inventory == null)
+            Debug.LogError("[FoodSystem] Inventory is null. Assign it in inspector.");
+    }
+
+    public void TakeEggs()
+    {
+        // With your setup the world egg object already has Item component + prefab,
+        // so you don't need to create items here. Keep behaviour minimal.
+        CloseCanvas();
+    }
+
+    public void TakeSalt()
+    {
+        CloseCanvas();
+    }
+
+    public void TakePepper()
+    {
+        CloseCanvas();
+    }
+
+    // Called when interacting with the pan
+    public void PlaceEggs()
+    {
+        if (inventory == null)
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            Debug.LogError("[FoodSystem.PlaceEggs] Inventory null.");
+            OpenCanvas();
+            return;
+        }
 
-            RaycastHit hit;
+        // Handle pepper
+        if (inventory.CurrentItemID == pepperItemID)
+        {
+            if (PepperToggle != null) PepperToggle.isOn = true;
+            else Debug.LogWarning("[FoodSystem] PepperToggle not assigned.");
+            inventory.RemoveItem();
+            return;
+        }
 
-            if (Physics.Raycast(ray, out hit, 5f))
+        // Handle salt
+        if (inventory.CurrentItemID == saltItemID)
+        {
+            if (SaltToggle != null) SaltToggle.isOn = true;
+            else Debug.LogWarning("[FoodSystem] SaltToggle not assigned.");
+            inventory.RemoveItem();
+            return;
+        }
+
+        // Handle eggs: place one broken egg per egg item in inventory.
+        if (inventory.CurrentItemID == eggItemID)
+        {
+            // safety checks
+            if (BrokenEggs == null || BrokenEggs.Length == 0)
             {
-                if (hit.collider.CompareTag("Pan"))
-                {
+                Debug.LogWarning("[FoodSystem.PlaceEggs] BrokenEggs not set or empty.");
+                inventory.RemoveItem(); // still remove so player doesn't get stuck
+                return;
+            }
 
-                    //InteractionText.text = "place food";
-
-
-                    if (Canvas.activeSelf == false)
-                    {
-                        Canvas.SetActive(true);
-
-                    }
-                    if (Input.GetMouseButtonDown(0) && HandFull == true)
-                    {
-                        //take eggs
-                        PlaceEggs();
-                    }
-                }
-                else if (hit.collider.CompareTag("Eggs"))
-                {
-                    InteractionText.text = "take eggs";
-
-
-                    if (Canvas.activeSelf == true)
-                    {
-                        Canvas.SetActive(false);
-                        
-                    }
-                    if (Input.GetMouseButtonDown(0) && HandFull == false)
-                    {
-                        //take eggs
-                        TakeEggs();
-                    }
-
-
-                }
-                else if (hit.collider.CompareTag("Pepper"))
-                {
-
-                    InteractionText.text = "take pepper";
-
-                    if (Canvas.activeSelf == true)
-                    {
-                        Canvas.SetActive(false);
-
-                       
-                    }
-                    if (Input.GetMouseButtonDown(0) && HandFull == false)
-                    {
-                        //take eggs
-                        TakePepper();
-                    }
-
-                }
-
-                else if(hit.collider.CompareTag("Salt"))
-                {
-                    InteractionText.text = "take salt";
-
-
-                    if (Canvas.activeSelf == true)
-                    {
-                        Canvas.SetActive(false);
-                        
-                        
-                    }
-                    if (Input.GetMouseButtonDown(0) && HandFull == false)
-                    {
-                        //take eggs
-                        TakeSalt();
-                    }
-                }
-
+            // Activate next broken egg visual if available
+            if (eggsPlaced < BrokenEggs.Length)
+            {
+                GameObject next = BrokenEggs[eggsPlaced];
+                if (next != null)
+                    next.SetActive(true);
                 else
-                {
-                    InteractionText.text = "";
+                    Debug.LogWarning($"[FoodSystem.PlaceEggs] BrokenEggs[{eggsPlaced}] is null.");
 
-                }
+                eggsPlaced++;
+
+                // update UI text if assigned
+                if (EggsText != null)
+                    EggsText.text = $"Eggs ({eggsPlaced}/{BrokenEggs.Length})";
             }
 
-            else
+            // Remove the egg item immediately after placing one egg
+            inventory.RemoveItem();
+
+            // If we've completed all egg slots, toggle and (optionally) show result
+            if (eggsPlaced >= BrokenEggs.Length)
             {
-                InteractionText.text = "";
-
-
-                if (Canvas.activeSelf == true)
-                {
-                    Canvas.SetActive(false);
-
-                }
-
+                if (EggsToggle != null) EggsToggle.isOn = true;
+                Debug.Log("[FoodSystem] All eggs placed.");
             }
+
+            // Show canvas to display pan UI/results
+            OpenCanvas();
+            return;
         }
 
+        // Not holding anything relevant -> open the pan UI
+        OpenCanvas();
     }
 
-    private void TakeEggs()
+    private void CloseCanvas()
     {
-        HandFull = true;
-
-        if(Inventory.NumberEggs==0)
-        {
-            Inventory.NumberEggs = 1;
-            Eggs[0].SetActive(false);
-        }
-        else if (Inventory.NumberEggs == 1 )
-        {
-            Inventory.NumberEggs = 2;
-            Eggs[1].SetActive(false);
-            EggPack.SetActive(false);
-        }
-
+        if (Canvas != null && Canvas.activeSelf) Canvas.SetActive(false);
     }
 
-    private void TakeSalt()
+    private void OpenCanvas()
     {
-        HandFull = true;
-
-        Inventory.HaveSalt = true;
-        Salt.SetActive(false);
+        if (Canvas != null && !Canvas.activeSelf) Canvas.SetActive(true);
     }
-    private void TakePepper()
-    {
-        HandFull = true;
-
-        Inventory.HavePepper = true;
-        Pepper.SetActive(false);
-    }
-    private void PlaceEggs()
-    {
-        HandFull = false;
-
-        if(Inventory.HavePepper == true)
-        {
-            Inventory.HavePepper = false;
-
-            PepperToggle.isOn = true;
-        }
-
-        if(Inventory.HaveSalt == true)
-        {
-            Inventory.HaveSalt = false;
-
-            SaltToggle.isOn = true;
-        }
-
-        if(Inventory.NumberEggs == 1)
-        {
-            BrokenEggs[0].SetActive(true);
-            EggsText.text = "Eggs (1/2)";
-        }
-
-        if(Inventory.NumberEggs == 2)
-        {
-            BrokenEggs[1].SetActive(true);
-            EggsText.text = "Eggs (2/2)";
-            EggsToggle.isOn = true;
-        }
-    }
-
-
 }
