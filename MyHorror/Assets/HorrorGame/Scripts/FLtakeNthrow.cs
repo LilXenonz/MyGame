@@ -3,9 +3,9 @@ using UnityEngine;
 public class FLtakeNthrow : MonoBehaviour
 {
 
-    private bool CanInteract = true;
+    //private bool CanInteract = true;
 
-    [SerializeField] private Transform HoldPoint;
+    //[SerializeField] private Transform HoldPoint;
     [SerializeField] float force = 10f;
 
     private GameObject HeldObject;

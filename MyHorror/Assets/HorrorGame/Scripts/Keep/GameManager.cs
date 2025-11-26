@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Collections;
-using UnityEngine.Rendering;
+using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
-using UnityStandardAssets.CrossPlatformInput;
+
+using UnityEngine.Rendering;
 
 
 public class GameManager : Singleton<GameManager>
@@ -51,13 +51,8 @@ public class GameManager : Singleton<GameManager>
     public Image hidePlaceExitImage;
     public Image interactImage;
 
-    [Header("Hide Place Settings")]
-    public HidePlace hidePlace;
-
 
     public Volume GlobalPPVolume;
-
-    [SerializeField] private FirstPersonController  FPSController;
 
 
     public T GetStack<T>() where T : VolumeComponent
@@ -69,10 +64,9 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void FreezePlayer(bool state, bool showCursor = false, bool lockInput = true)
-    {  
+    {
 
-        FPSController.m_BlockLook = state;
-        FPSController.m_BlockMovement = state;
+        player.locked = state;
 
 
         if (lockInput)
@@ -91,7 +85,7 @@ public class GameManager : Singleton<GameManager>
             Cursor.lockState = CursorLockMode.Locked;
         }
         Time.timeScale = 1.0f;
-        player.m_BlockMovement = true;
+        player.locked = true;
         enemy.gameObject.SetActive(false);
         pausePanel.SetActive(false);
         fadeScreen.Play("Fade");
@@ -225,9 +219,10 @@ public class GameManager : Singleton<GameManager>
         player.transform.rotation = playerSpawnPoint.rotation;
         enemy.transform.position = enemySpawnPoint.position;
         enemy.transform.rotation = enemySpawnPoint.rotation;
-        player.m_BlockLook = false;
-        player.m_BlockMovement = false;
-        player.cameraTransform.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        player.locked = false;
+        player.lockedMovement = false;
+        player.cameraTransform.localRotation = new Quaternion(0, 0, 0, 0);
+        player.cameraAnimation.Play(player.cameraIdleAnimName);
         enemy.RestartEnemyStats();
         ScreenFade(0);
 

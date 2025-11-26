@@ -59,15 +59,15 @@ public class CamInteraction : MonoBehaviour
                 {
                     RayCastCheck().GetComponent<InteractCallEvent>().InteractCall();
                 }
-                
-                  if (RayCastCheck().GetComponent<Item>())
+
+                if (RayCastCheck().GetComponent<Item>())
                 {
                     AudioSource.PlayClipAtPoint(RayCastCheck().GetComponent<Item>().pickupSound, transform.position);
                     inventory.AddItem(RayCastCheck().GetComponent<Item>().itemID, RayCastCheck());
 
                 }
                 else
-                if (RayCastCheck().GetComponent<Lock>())
+               if (RayCastCheck().GetComponent<Lock>())
                 {
                     if (inventory.CurrentItemID == RayCastCheck().GetComponent<Lock>().needItem)
                     {
@@ -89,7 +89,7 @@ public class CamInteraction : MonoBehaviour
                 }
 
                 else
-                if (RayCastCheck().GetComponent<DoorSiders>())
+               if (RayCastCheck().GetComponent<DoorSiders>())
                 {
                     if (!RayCastCheck().GetComponent<DoorSiders>().genDoor.locked)
                     {
@@ -102,7 +102,7 @@ public class CamInteraction : MonoBehaviour
                             inventory.RemoveItem();
                             RayCastCheck().GetComponent<DoorSiders>().genDoor.UnlockDoor();
                         }
-                        else 
+                        else
                         {
                             RayCastCheck().GetComponent<DoorSiders>().InteractWithDoor();
                         }
@@ -110,8 +110,8 @@ public class CamInteraction : MonoBehaviour
                     }
 
                 }
-                else 
-                if (hitObj.TryGetComponent<FoodInteractable>(out var food))
+                else
+               if (hitObj.TryGetComponent<FoodInteractable>(out var food))
                 {
                     // FoodInteractable.OnInteract will decide behavior (open UI, add to inventory, play sound...)
                     food.OnInteract();
@@ -136,7 +136,7 @@ public class CamInteraction : MonoBehaviour
         {
             if (hit.transform.gameObject.tag == interactTag)
             {
-                Debug.Log(hit.transform.gameObject.tag);
+                //Debug.Log(hit.transform.gameObject.tag);
                 return hit.transform.gameObject;
             }
 

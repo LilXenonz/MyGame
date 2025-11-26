@@ -140,11 +140,12 @@ GameObject:
   - component: {fileID: 6881533586347759619}
   - component: {fileID: 6797349511372238483}
   - component: {fileID: 11726958582088733}
+  - component: {fileID: 9217798047632437091}
+  - component: {fileID: 4203694270294152546}
   - component: {fileID: 2773426492404736537}
-  - component: {fileID: 1682443821534390119}
   - component: {fileID: 8162741108764591709}
   - component: {fileID: 1697677488314727525}
-  - component: {fileID: 3890684074179379529}
+  - component: {fileID: 7512148282789074081}
   m_Layer: 8
   m_Name: FlashLight
   m_TagString: Interact
@@ -181,7 +182,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2573864735555583032}
   serializedVersion: 4
-  m_Mass: 5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -195,8 +196,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -221,6 +222,48 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.41938627, y: 0.5225301, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9217798047632437091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2573864735555583032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0407eedd96b3f2c459eaadfa3f1b26ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemID: 5
+  itemName: FlashLight
+  pickupSound: {fileID: 8300000, guid: ab0f7455ed6c83b4b8aa2a2eccac4cfe, type: 3}
+--- !u!114 &4203694270294152546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2573864735555583032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70fa1c85cbdfc3241bb70b1d91ad6d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1697677488314727525}
+        m_TargetAssemblyTypeName: FLtakeNthrow, Assembly-CSharp
+        m_MethodName: EquipLight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2773426492404736537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,21 +279,6 @@ MonoBehaviour:
   sens: 2
   MaxLRot: 10
   MaxRRot: 50
---- !u!114 &1682443821534390119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2573864735555583032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f315bcf51babd44eba7a6417222176c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemID: 5
-  itemName: Flashlight
-  pickupSound: {fileID: 8300000, guid: ab0f7455ed6c83b4b8aa2a2eccac4cfe, type: 3}
 --- !u!114 &8162741108764591709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,11 +305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c01921394e6b3438eba5a4ab0d9e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HoldPoint: {fileID: 0}
   force: 10
   MovecamHorizontal: {fileID: 2773426492404736537}
   FlashlightSystem: {fileID: 8162741108764591709}
---- !u!114 &3890684074179379529
+--- !u!114 &7512148282789074081
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,24 +317,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2573864735555583032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c9074f449a41742b8af8cbcea70867, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a096fbd292f6e047ae5ca3b4a1b378e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1697677488314727525}
-        m_TargetAssemblyTypeName: FLtakeNthrow, Assembly-CSharp
-        m_MethodName: EquipLight
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  objectID: 2
+  objectType: 0
 --- !u!1 &2838056511806981110
 GameObject:
   m_ObjectHideFlags: 0

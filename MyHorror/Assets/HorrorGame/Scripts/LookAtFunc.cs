@@ -3,7 +3,6 @@ using UnityEngine;
 public class LookAtFunc : MonoBehaviour
 {
     public Animator animator;
-    public Animator CopAnimator;
 
     public bool IKActive = false;
 
@@ -28,25 +27,15 @@ public class LookAtFunc : MonoBehaviour
 
             }
 
-            /*else
+            else
             {
                 LookWeight = Mathf.Lerp(LookWeight, 0, Time.deltaTime * 2);
             }
-
-            if (CamInteract.TalkToNpcBool == true)
-            {
 
             animator.SetLookAtPosition(LookAtObj.position);
             animator.SetLookAtWeight(LookWeight);
 
             }
-            else if(CamInteract.TalkToCopBool == true)
-            {
-                CopAnimator.SetLookAtPosition(LookAtObj.position);
-                CopAnimator.SetLookAtWeight(LookWeight);
-            }*/
-
-        }
     }
 
     }

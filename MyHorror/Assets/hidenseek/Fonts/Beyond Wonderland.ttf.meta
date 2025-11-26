@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 4e1a11de13ed98045b4f652a57e6db6f
+timeCreated: 1572714916
+licenseType: Store
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Beyond Wonderland
+  fontNames:
+  - Beyond Wonderland
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
