@@ -1,18 +1,10 @@
-﻿using System.Collections;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.UI;
 
-public class CamInteraction : MonoBehaviour
-{
+public class CamInteraction : MonoBehaviour {
 
-
-    public LookAtFunc lookAtFunc;
     public Text InteractionText;
-    private float InteractionDis = 5f;
 
     [Header("Interact Settings")]
     [Tooltip("Distance of ray to interact")]
@@ -24,8 +16,8 @@ public class CamInteraction : MonoBehaviour
     [Tooltip("Inventory script")]
     public Inventory inventory;
     [Header("UI Settings")]
-    [Tooltip("UI interactButton for mobile only")]
-    public Image interactButton;
+    //[Tooltip("UI interactButton for mobile only")]
+    //public Image interactButton;
     private FirstPersonController player;
 
     private void Awake()
@@ -33,10 +25,11 @@ public class CamInteraction : MonoBehaviour
         player = inventory.gameObject.GetComponent<FirstPersonController>();
     }
 
-    void Update()
+    private void Update()
     {
         if (RayCastCheck() != null)
         {
+
             GameObject hitObj = RayCastCheck();
 
             if (hitObj.TryGetComponent<FoodInteractable>(out var foodInteractable))
@@ -52,33 +45,35 @@ public class CamInteraction : MonoBehaviour
                 InteractionText.text = "PRESS E";
             }
 
+            //interactButton.enabled = true;
             InteractionText.text = "PREES E";
+
             if (CrossPlatformInputManager.GetButtonDown("Interact"))
             {
-                if (RayCastCheck().GetComponent<InteractCallEvent>())
+                if(RayCastCheck().GetComponent<InteractCallEvent>())
                 {
                     RayCastCheck().GetComponent<InteractCallEvent>().InteractCall();
                 }
-
-                if (RayCastCheck().GetComponent<Item>())
-                {
+                else
+                  if(RayCastCheck().GetComponent<Item>())
+                  {
                     AudioSource.PlayClipAtPoint(RayCastCheck().GetComponent<Item>().pickupSound, transform.position);
                     inventory.AddItem(RayCastCheck().GetComponent<Item>().itemID, RayCastCheck());
-
-                }
+                   
+                  }
                 else
-               if (RayCastCheck().GetComponent<Lock>())
+                if (RayCastCheck().GetComponent<Lock>())
                 {
                     if (inventory.CurrentItemID == RayCastCheck().GetComponent<Lock>().needItem)
                     {
                         if (!RayCastCheck().GetComponent<Lock>().isOpen)
                         {
-                            if (RayCastCheck().GetComponent<Lock>().removeAfterOpen)
+                            if(RayCastCheck().GetComponent<Lock>().removeAfterOpen)
                             {
                                 inventory.RemoveItem();
-                            }
-
-                            if (RayCastCheck().GetComponent<Lock>().playItemAnim)
+                            }  
+                            
+                            if(RayCastCheck().GetComponent<Lock>().playItemAnim)
                             {
                                 player.inventory.PlayItemAnim(RayCastCheck().GetComponent<Lock>().itemAnimation);
                             }
@@ -87,29 +82,26 @@ public class CamInteraction : MonoBehaviour
                     }
 
                 }
-
                 else
-               if (RayCastCheck().GetComponent<DoorSiders>())
-                {
-                    if (!RayCastCheck().GetComponent<DoorSiders>().genDoor.locked)
-                    {
+                if (RayCastCheck().GetComponent<DoorSiders>())
+                     {
+                       if (!RayCastCheck().GetComponent<DoorSiders>().genDoor.locked)
+                       {
                         RayCastCheck().GetComponent<DoorSiders>().InteractWithDoor();
-                    }
-                    else
-                    {
-                        if (inventory.CurrentItemID == RayCastCheck().GetComponent<DoorSiders>().genDoor.keyID)
-                        {
+                       }else
+                       {
+                          if(inventory.CurrentItemID == RayCastCheck().GetComponent<DoorSiders>().genDoor.keyID)
+                          {
                             inventory.RemoveItem();
                             RayCastCheck().GetComponent<DoorSiders>().genDoor.UnlockDoor();
-                        }
-                        else
-                        {
+                          }else
+                          {
                             RayCastCheck().GetComponent<DoorSiders>().InteractWithDoor();
-                        }
-
-                    }
-
-                }
+                          }
+                     
+                       }
+                     
+                     }
                 else
                if (hitObj.TryGetComponent<FoodInteractable>(out var food))
                 {
@@ -118,14 +110,15 @@ public class CamInteraction : MonoBehaviour
                     return;
                 }
             }
+            
+        }else
+        {
+            //interactButton.enabled = false;
+            InteractionText.text = "";
 
         }
-            else
-            {
-                InteractionText.text = "";
-            } 
+
     }
-    
 
     private GameObject RayCastCheck()
     {
@@ -136,7 +129,6 @@ public class CamInteraction : MonoBehaviour
         {
             if (hit.transform.gameObject.tag == interactTag)
             {
-                //Debug.Log(hit.transform.gameObject.tag);
                 return hit.transform.gameObject;
             }
 
@@ -147,5 +139,3 @@ public class CamInteraction : MonoBehaviour
     }
 
 }
-
-

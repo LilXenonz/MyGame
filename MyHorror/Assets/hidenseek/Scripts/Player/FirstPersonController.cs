@@ -5,11 +5,11 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
 
 
-public class PlayerController : MonoBehaviour {
+public class FirstPersonController : MonoBehaviour {
 
     [Header("GeneralSettings")]
     [Tooltip("Object with GameControll.cs script")]
-    public GameControll gameControll;
+    public GameManager GameManager;
     [HideInInspector]
     public Inventory inventory;
 
@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour {
     public float walkSpeed;
     [Tooltip("Player crouch speed")]
     public float crouchSpeed;
+    [Tooltip("Player run speed")]
+    public float runSpeed;
     [HideInInspector]
     public bool locked;
     [HideInInspector]
@@ -28,6 +30,19 @@ public class PlayerController : MonoBehaviour {
     private float moveSpeed;
     [HideInInspector]
     public bool playerMoving;
+
+    [Header("Stamina Settings")]
+    public Image m_staminaBar;
+    public GameObject m_runArrownImage;
+    public float m_stamina = 100;
+    public float m_maxStamina = 100;
+    [HideInInspector]
+    public bool m_unlimitedStamina = false;
+    public float m_staminaConsumptionSpeed;
+    public float m_staminaRecoverySpeed;
+    bool m_staminaRecovery;
+    [HideInInspector]
+    public bool m_running;
 
     [Header("CameraSettings")]
     [Tooltip("Mouse Sensetivity value")]
@@ -95,6 +110,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
+        m_runArrownImage.SetActive(m_running);
         AS = GetComponent<AudioSource>();
         inventory = GetComponent<Inventory>();
         characterController = GetComponent<CharacterController>();
@@ -119,6 +135,7 @@ public class PlayerController : MonoBehaviour {
             {
                 Movement();
                 Controll();
+                Stamina();
             }
             
     
@@ -155,15 +172,20 @@ public class PlayerController : MonoBehaviour {
             SetCrouch();
         }
 
+        if (CrossPlatformInputManager.GetButtonDown("Run"))
+        {
+            SetRun();
+        }
+
         if (CrossPlatformInputManager.GetButtonDown("Drop"))
         {
-            gameControll.inventory.DropItem();
+            GameManager.inventory.DropItem();
         }
     }
 
     private void PlayerLegsBreak()
     {
-        gameControll.ScreenBlood(1);
+        GameManager.ScreenBlood(1);
         lockedMovement = true;
         crouch = true;
         moveSpeed = crouchSpeed;
@@ -179,9 +201,9 @@ public class PlayerController : MonoBehaviour {
     {
         if (state == 1)
         {
-            if(gameControll.enemy.seePlayer)
+            if(GameManager.enemy.seePlayer)
             {
-                gameControll.enemy.SendHidePlace();
+                GameManager.enemy.SendHidePlace();
             }
             StopAllCoroutines();
             imageExitHidePlace.enabled = true;
@@ -207,7 +229,7 @@ public class PlayerController : MonoBehaviour {
         if (state == 1)
         {
             StopAllCoroutines();
-            gameControll.inventory.DropItem();
+            GameManager.inventory.DropItem();
             locked = true;
             characterController.height = normalHeight;
             cameraTransform.localPosition = new Vector3(0f, cameraNormalOffset, 0f);
@@ -220,24 +242,24 @@ public class PlayerController : MonoBehaviour {
         if(state == 2)
         {
             cameraAnimation.Play(cameraHitAnimName);
-            gameControll.ScreenFade(2);
+            GameManager.ScreenFade(2);
         }
 
         if(state == 3)
         {
             cameraAnimation.Play(camHitName);
-            gameControll.inventory.DropItem();
+            GameManager.inventory.DropItem();
             locked = true;           
             crouch = false;
             moveSpeed = walkSpeed;
             imageStand.enabled = true;
             imageCrouch.enabled = false;
-            gameControll.ScreenFade(3);
+            GameManager.ScreenFade(3);
         }
 
         if(state == 4)
         {
-            gameControll.ScreenBlood(0);
+            GameManager.ScreenBlood(0);
         }
 
        
@@ -267,6 +289,87 @@ public class PlayerController : MonoBehaviour {
         }
 
 
+    }
+    public void SetRun()
+    {
+
+        if (!m_running && !m_staminaRecovery)
+        {
+            m_running = true;
+            m_runArrownImage.SetActive(m_running);
+
+            if (!crouch)
+            {
+                moveSpeed = runSpeed;
+            }
+        }
+        else
+        {
+            m_running = false;
+            m_runArrownImage.SetActive(m_running);
+
+            if (!crouch)
+            {
+                moveSpeed = walkSpeed;
+            }
+            else
+            {
+                moveSpeed = crouchSpeed;
+            }
+        }
+    }
+
+    private void Stamina()
+    {
+
+        m_staminaBar.fillAmount = m_stamina / 100f;
+
+        if (m_running && !crouch)
+        {
+            if (characterController.velocity.magnitude > 3.5f && !m_unlimitedStamina)
+            {
+                m_stamina -= m_staminaConsumptionSpeed * Time.deltaTime;
+                if (m_stamina <= 0)
+                {
+                    m_running = false;
+                    m_runArrownImage.SetActive(m_running);
+                    m_staminaRecovery = true;
+                    m_staminaBar.color = Color.red;
+                    if (!crouch)
+                    {
+                        moveSpeed = walkSpeed;
+                    }
+                    else
+                    {
+                        moveSpeed = crouchSpeed;
+                    }
+                }
+            }
+            else
+            {
+                if (m_stamina < m_maxStamina)
+                {
+                    m_stamina += m_staminaRecoverySpeed * Time.deltaTime;
+                    if (m_stamina >= m_maxStamina)
+                    {
+                        m_staminaRecovery = false;
+                        m_staminaBar.color = Color.green;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (m_stamina < m_maxStamina)
+            {
+                m_stamina += m_staminaRecoverySpeed * Time.deltaTime;
+                if (m_stamina >= m_maxStamina)
+                {
+                    m_staminaBar.color = Color.green;
+                    m_staminaRecovery = false;
+                }
+            }
+        }
     }
 
     private void CameraRotation()
@@ -385,8 +488,68 @@ public class PlayerController : MonoBehaviour {
     {
         yield return new WaitForSeconds(legsFixTime);
         lockedMovement = false;
-        gameControll.ScreenBlood(0);
+        GameManager.ScreenBlood(0);
 
+    }
+
+    private bool isLerpingRotation = false;
+    private Quaternion startRotation;
+    private Quaternion targetRotation;
+    private float lerpTimer = 0f;
+    private float lerpDuration = 0f;
+
+    public void LerpRotation(Transform lookAtTarget, float duration, bool isPlayerLocked)
+    {
+        if (isLerpingRotation) return;
+
+        StartCoroutine(LerpRotationCoroutine(lookAtTarget, duration, isPlayerLocked));
+    }
+
+    private IEnumerator LerpRotationCoroutine(Transform lookAtTarget, float duration, bool isPlayerLocked)
+    {
+        isLerpingRotation = true;
+        bool wasLocked = locked;
+        locked = isPlayerLocked;
+
+        // Store both body and camera rotations
+        startRotation = transform.rotation;
+        Quaternion startCamRotation = cameraTransform.rotation;
+
+        // Calculate direction to target (include Y axis for vertical look)
+        Vector3 directionToTarget = lookAtTarget.position - cameraTransform.position;
+
+        // Create target rotation for both body (horizontal) and camera (full rotation)
+        Quaternion targetBodyRotation = Quaternion.LookRotation(new Vector3(directionToTarget.x, 0, directionToTarget.z));
+        targetRotation = Quaternion.LookRotation(directionToTarget);
+
+        lerpTimer = 0f;
+        lerpDuration = duration;
+
+        while (lerpTimer < lerpDuration)
+        {
+            lerpTimer += Time.deltaTime;
+            float t = lerpTimer / lerpDuration;
+
+            t = t * t * (3f - 2f * t);
+
+            // Rotate body for horizontal movement
+            transform.rotation = Quaternion.Slerp(startRotation, targetBodyRotation, t);
+            // Rotate camera for vertical movement
+            cameraTransform.rotation = Quaternion.Slerp(startCamRotation, targetRotation, t);
+
+            yield return null;
+        }
+
+        // Final rotations
+        transform.rotation = targetBodyRotation;
+        cameraTransform.rotation = targetRotation;
+
+        if (!wasLocked)
+        {
+            locked = false;
+        }
+
+        isLerpingRotation = false;
     }
 
 }

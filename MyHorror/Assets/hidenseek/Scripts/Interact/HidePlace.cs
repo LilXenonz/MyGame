@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-public class HidePlace : MonoBehaviour
-{
+public class HidePlace : MonoBehaviour {
 
-
-    public enum HidePlaceType { bed, chest }
+    
+    public enum HidePlaceType {bed, chest}
     [Tooltip("Type of hide palce (bed, chest)")]
     public HidePlaceType hidePlaceType = HidePlaceType.bed;
     [Tooltip("Player position after interact with hide place")]
@@ -44,7 +43,7 @@ public class HidePlace : MonoBehaviour
     public void Interact()
     {
         player.hidePlace = this;
-        player.Hide(1);
+        player.Hide(1);       
         player.transform.position = enterPlace.position;
         player.transform.rotation = enterPlace.rotation;
         float minX = enterPlace.eulerAngles.y + clampCameraX.x;
@@ -54,12 +53,12 @@ public class HidePlace : MonoBehaviour
         player.clampYaxis.y = maxX;
         player.clampXaxis.x = clampCameraY.x;
         player.clampXaxis.y = clampCameraY.y;
-        if (hidePlaceAnimation)
+        if(hidePlaceAnimation)
         {
             hidePlaceAnimation.Play(hidePlaceHideAnimationName);
         }
 
-        if (hideSound)
+        if(hideSound)
         {
             AudioSource.PlayClipAtPoint(hideSound, transform.position);
         }
@@ -68,31 +67,19 @@ public class HidePlace : MonoBehaviour
 
     public void ExitHidePlace()
     {
-        CharacterController cc = player.GetComponent<CharacterController>();
-
-        if (cc != null) cc.enabled = false;
-
-        Vector3 targetPos = outPlace.position;
-        targetPos.y += 0.02f; 
-        player.transform.position = targetPos;
+        player.transform.position = outPlace.position;
         player.transform.rotation = outPlace.rotation;
-
         float minX = enterPlace.eulerAngles.y;
         float maxX = enterPlace.eulerAngles.y;
         player.clampYaxis.x = minX;
         player.clampYaxis.y = maxX;
+        player.clampXaxis.x = 0;
+        player.clampXaxis.y = 0;
         player.clampXaxis.x = -90;
         player.clampXaxis.y = 90;
         player.clampByY = false;
         player.hidePlace = null;
-
         player.Hide(0);
-
-        if (cc != null)
-        {
-            cc.enabled = true;
-            cc.Move(Vector3.zero);
-        }
 
         if (hidePlaceAnimation)
         {

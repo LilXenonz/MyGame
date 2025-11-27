@@ -10,7 +10,6 @@ public class LookAtFunc : MonoBehaviour
 
     public float LookWeight = 0f;
 
-    public CamInteraction CamInteract;
 
     private void OnAnimatorIK(int layerIndex)
     {

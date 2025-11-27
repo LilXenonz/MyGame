@@ -5,13 +5,13 @@ using UnityEditor.SceneManagement;
 using UnityEngine.Events;
 using UnityEditor.Events;
 
-public class HHSManager : Editor
+public class ToolManager : Editor
 {
     [SerializeField]
     private static ObjectSaveID[] objectsToSave;
     private static string path;
 
-    [MenuItem("HHS/Rebuild Items Save ID")]
+    [MenuItem("Tools/Rebuild Items Save ID")]
     static void RebuildItems()
     {
         objectsToSave = FindObjectsOfType<ObjectSaveID>();
@@ -51,7 +51,7 @@ public class HHSManager : Editor
         GameObject psp = PrefabUtility.InstantiatePrefab(Resources.Load("PlayerSpawnPoint")) as GameObject;    
         GameObject esp = PrefabUtility.InstantiatePrefab(Resources.Load("EnemySpawnPoint")) as GameObject;   
         GameObject player = PrefabUtility.InstantiatePrefab(Resources.Load("Player")) as GameObject;     
-        GameObject gameController = PrefabUtility.InstantiatePrefab(Resources.Load("GameManager")) as GameObject;       
+        GameObject GameManager = PrefabUtility.InstantiatePrefab(Resources.Load("GameManager")) as GameObject;       
         GameObject enemy = PrefabUtility.InstantiatePrefab(Resources.Load("Enemy")) as GameObject;        
         GameObject enemyWP = PrefabUtility.InstantiatePrefab(Resources.Load("EnemyWayPoints")) as GameObject;
         GameObject winTrigger = PrefabUtility.InstantiatePrefab(Resources.Load("WinTrigger")) as GameObject;     
@@ -61,22 +61,22 @@ public class HHSManager : Editor
 
 
         ////SETUP GAME CONTROLLER
-        gameController.GetComponent<GameControll>().player = player.GetComponent<PlayerController>();
-        gameController.GetComponent<GameControll>().inventory = player.GetComponent<Inventory>();
-        gameController.GetComponent<GameControll>().enemy = enemy.GetComponent<Enemy>();
-        gameController.GetComponent<GameControll>().playerSpawnPoint = psp.transform;
-        gameController.GetComponent<GameControll>().enemySpawnPoint = esp.transform;
+        GameManager.GetComponent<GameManager>().player = player.GetComponent<FirstPersonController>();
+        GameManager.GetComponent<GameManager>().inventory = player.GetComponent<Inventory>();
+        GameManager.GetComponent<GameManager>().enemy = enemy.GetComponent<Enemy>();
+        GameManager.GetComponent<GameManager>().playerSpawnPoint = psp.transform;
+        GameManager.GetComponent<GameManager>().enemySpawnPoint = esp.transform;
       
 
         ////PLAYER SETUP
-        player.GetComponent<PlayerController>().inventory = player.GetComponent<Inventory>();
-        player.GetComponent<PlayerController>().gameControll = gameController.GetComponent<GameControll>();
-        player.GetComponent<Inventory>().database = gameController.GetComponent<ItemsDatabase>();
-        player.GetComponent<Inventory>().DropButton = gameController.GetComponent<GameControll>().dropImage;
-        player.GetComponent<PlayerController>().imageStand = gameController.GetComponent<GameControll>().standImage;
-        player.GetComponent<PlayerController>().imageCrouch = gameController.GetComponent<GameControll>().crouchImage;
-        player.GetComponent<PlayerController>().imageExitHidePlace = gameController.GetComponent<GameControll>().hidePlaceExitImage;
-        player.GetComponent<PlayerController>().cameraTransform.GetComponent<Interact>().interactButton = gameController.GetComponent<GameControll>().interactImage;
+        player.GetComponent<FirstPersonController>().inventory = player.GetComponent<Inventory>();
+        player.GetComponent<FirstPersonController>().GameManager = GameManager.GetComponent<GameManager>();
+        player.GetComponent<Inventory>().database = GameManager.GetComponent<ItemsDatabase>();
+        player.GetComponent<Inventory>().DropButton = GameManager.GetComponent<GameManager>().dropImage;
+        player.GetComponent<FirstPersonController>().imageStand = GameManager.GetComponent<GameManager>().standImage;
+        player.GetComponent<FirstPersonController>().imageCrouch = GameManager.GetComponent<GameManager>().crouchImage;
+        player.GetComponent<FirstPersonController>().imageExitHidePlace = GameManager.GetComponent<GameManager>().hidePlaceExitImage;
+        //player.GetComponent<FirstPersonController>().cameraTransform.GetComponent<CamInteraction>().interactButton = GameManager.GetComponent<GameManager>().interactImage;
         player.transform.position = psp.transform.position;
 
 
@@ -87,7 +87,7 @@ public class HHSManager : Editor
  
 
         ////WINPOINT SETUP
-        UnityEventTools.AddPersistentListener(winTrigger.GetComponent<TriggerEvents>().interactEvent, gameController.GetComponent<GameControll>().GameWin);
+        UnityEventTools.AddPersistentListener(winTrigger.GetComponent<TriggerEvents>().interactEvent, GameManager.GetComponent<GameManager>().GameWin);
 
         for (int i = 0; i < enemyWP.transform.childCount; i++)
         {

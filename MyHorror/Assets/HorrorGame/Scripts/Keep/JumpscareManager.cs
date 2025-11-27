@@ -183,7 +183,7 @@ public class JumpscareManager : Singleton<JumpscareManager>
         else if ((jumpscare.JumpscareType == JumpscareTypeEnum.Indirect || jumpscare.JumpscareType == JumpscareTypeEnum.Audio) && jumpscare.LookAtJumpscare)
         {
             isPlayerLocked = jumpscare.LockPlayer;
-            //lookController.LerpRotation(jumpscare.LookAtTarget, jumpscare.LookAtDuration, isPlayerLocked);
+            lookController.LerpRotation(jumpscare.LookAtTarget, jumpscare.LookAtDuration, isPlayerLocked);
             if (isPlayerLocked) gameManager.FreezePlayer(true);
         }
 

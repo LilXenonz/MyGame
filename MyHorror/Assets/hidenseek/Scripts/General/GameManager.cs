@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
-public class GameControll : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 
     [Header("General parameters")]
     [Tooltip("count of player life. If life count = 0, game over")]
     public int lifeCount;
     [Tooltip("Player controller script here")]
-    public PlayerController player;
+    public FirstPersonController player;
     [Tooltip("Player inventory script")]
     public Inventory inventory;
     [Tooltip("Enemy gameobject")]
@@ -48,6 +49,29 @@ public class GameControll : MonoBehaviour {
     public Image hidePlaceExitImage;
     public Image interactImage;
 
+    public Volume GlobalPPVolume;
+
+
+    public T GetStack<T>() where T : VolumeComponent
+    {
+        if (GlobalPPVolume.profile.TryGet(out T component))
+            return component;
+
+        return default;
+    }
+
+    public void FreezePlayer(bool state, bool showCursor = false, bool lockInput = true)
+    {
+
+        player.locked = state;
+
+
+        if (lockInput)
+        {
+            Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = showCursor;
+        }
+    }
 
     private void Start()
     {

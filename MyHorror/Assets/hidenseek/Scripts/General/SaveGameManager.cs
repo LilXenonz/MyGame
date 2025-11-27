@@ -6,7 +6,7 @@ using System.IO;
 public class SaveGameManager : MonoBehaviour {
 
 
-    private GameControll gameControll;
+    private GameManager GameManager;
 
     private string path;
 
@@ -16,7 +16,7 @@ public class SaveGameManager : MonoBehaviour {
     private void Awake()
     {
         path = Application.persistentDataPath + "/save.xml";
-        gameControll = GetComponent<GameControll>();
+        GameManager = GetComponent<GameManager>();
       
     }
 
@@ -42,13 +42,13 @@ public class SaveGameManager : MonoBehaviour {
             gen.Add(obj.GetElement());
         }
 
-        gen.Add(new XElement("lifes",gameControll.lifeCount));
+        gen.Add(new XElement("lifes",GameManager.lifeCount));
 
         XDocument doc = new XDocument(gen);
 
         File.WriteAllText(path,doc.ToString());
         Debug.Log(path);
-        gameControll.MainMenuExit(1);
+        GameManager.MainMenuExit(1);
 
     }
 
@@ -76,7 +76,7 @@ public class SaveGameManager : MonoBehaviour {
     {
         int lf = int.Parse(root.Element("lifes").Value);
         Debug.Log(lf);
-        gameControll.lifeCount = lf;
+        GameManager.lifeCount = lf;
 
         for (int i = 0; i < objectsToSave.Count; i++)
             {
