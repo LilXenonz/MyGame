@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour {
         player.locked = false;
         player.lockedMovement = false;
         player.cameraTransform.localRotation = new Quaternion(0,0,0,0);
-        player.cameraAnimation.Play(player.cameraIdleAnimName);
+        //player.cameraAnimation.Play(player.cameraIdleAnimName);
         enemy.RestartEnemyStats();
         ScreenFade(0);
 

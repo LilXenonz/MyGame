@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets.Utility;
 
-
-public class FirstPersonController : MonoBehaviour {
+public class FirstPersonController : MonoBehaviour
+{
 
     [Header("GeneralSettings")]
     [Tooltip("Object with GameControll.cs script")]
@@ -52,20 +53,27 @@ public class FirstPersonController : MonoBehaviour {
     private float clampX;
     private float clampY;
 
+    [Header("Head Bob Settings")]
+    public bool useHeadBob = true;
+    public float stepInterval = 5f;
+    public CurveControlledBob headBob = new CurveControlledBob();
+    private Vector3 originalCameraPosition;
+    private float stepCycle;
+    private float nextStep;
+
     [Header("Camera Animations")]
     [Tooltip("Camera animation gameobject")]
     public Animation cameraAnimation;
     [Tooltip("Camera hit animation name")]
     public string cameraHitAnimName;
-    [Tooltip("Camera idle animation name")]
+    /*[Tooltip("Camera idle animation name")]
     public string cameraIdleAnimName;
     [Tooltip("Camera move animation name")]
-    public string cameraMoveAnimName;
-
+    public string cameraMoveAnimName;*/
 
     [Header("CrouchSettings")]
-    
-    private float lerpSpeed  = 10f;
+
+    private float lerpSpeed = 10f;
     [Tooltip("Player character controller normal height")]
     public float normalHeight;
     [Tooltip("Player character controller crouch height")]
@@ -85,7 +93,6 @@ public class FirstPersonController : MonoBehaviour {
     [HideInInspector]
     public bool crouch = false;
 
-
     [Header("UI Settigns")]
     [Tooltip("UI stand icon for mobile only")]
     public Image imageStand;
@@ -97,7 +104,6 @@ public class FirstPersonController : MonoBehaviour {
     [Header("Hide Place Settings")]
     public HidePlace hidePlace;
 
-
     [Header("Sounds Settings")]
     private AudioSource AS;
     [Tooltip("Foot steps sounds")]
@@ -106,7 +112,12 @@ public class FirstPersonController : MonoBehaviour {
     public AudioClip legBreakSound;
     private bool legBreak;
 
-
+    // Lerp Rotation Variables
+    private bool isLerpingRotation = false;
+    private Quaternion startRotation;
+    private Quaternion targetRotation;
+    private float lerpTimer = 0f;
+    private float lerpDuration = 0f;
 
     private void Awake()
     {
@@ -120,13 +131,18 @@ public class FirstPersonController : MonoBehaviour {
         imageCrouch.enabled = false;
         imageExitHidePlace.enabled = false;
 
+        // Initialize head bob
+        if (cameraTransform != null && useHeadBob)
+        {
+            originalCameraPosition = cameraTransform.localPosition;
+            headBob.Setup(Camera.main, stepInterval);
+        }
     }
 
     private void Update()
     {
-
         canBeCatchen = characterController.isGrounded;
-       
+
         if (!locked)
         {
             CameraRotation();
@@ -136,36 +152,79 @@ public class FirstPersonController : MonoBehaviour {
                 Movement();
                 Controll();
                 Stamina();
+                UpdateCameraPosition();
             }
-            
-    
         }
+    }
+
+    private void UpdateCameraPosition()
+    {
+        if (!useHeadBob || cameraTransform == null) return;
+
+        Vector3 newCameraPosition;
+        if (characterController.velocity.magnitude > 0 && characterController.isGrounded)
+        {
+            // Apply head bob
+            newCameraPosition = headBob.DoHeadBob(characterController.velocity.magnitude);
+        }
+        else
+        {
+            // Reset to original position when not moving
+            newCameraPosition = originalCameraPosition;
+        }
+
+        //Apply crouch offset
+        float currentOffset = crouch ? cameraCrouchOffset : cameraNormalOffset;
+        newCameraPosition.y = currentOffset;
+
+        cameraTransform.localPosition = newCameraPosition;
+    }
+
+    private void ProgressStepCycle(float speed)
+    {
+        if (characterController.velocity.sqrMagnitude > 0 && (characterController.velocity.x != 0 || characterController.velocity.z != 0))
+        {
+            stepCycle += (characterController.velocity.magnitude + speed) * Time.fixedDeltaTime;
+        }
+
+        if (!(stepCycle > nextStep)) return;
+
+        nextStep = stepCycle + stepInterval;
+        PlayFootStepAudio();
+    }
+
+    private void PlayFootStepAudio()
+    {
+        if (!characterController.isGrounded) return;
+
+        int n = Random.Range(1, footSteps.Length);
+        AS.volume = moveSpeed / 6;
+        AS.PlayOneShot(footSteps[n]);
+        // move picked sound to index 0 so it's not picked next time
+        footSteps[n] = footSteps[0];
+        footSteps[0] = AS.clip;
     }
 
     private void Controll()
     {
-        if(!characterController.isGrounded && characterController.velocity.y <= -7f && !legBreak)
+        if (!characterController.isGrounded && characterController.velocity.y <= -7f && !legBreak)
         {
             legBreak = true;
-          
-        }else
+
+        }
+        else
         {
-            if(characterController.isGrounded && legBreak)
+            if (characterController.isGrounded && legBreak)
             {
                 legBreak = false;
                 PlayerLegsBreak();
             }
         }
 
-
         float newHeight = crouch ? crouchHeight : normalHeight;
         characterController.height = Mathf.Lerp(characterController.height, newHeight, Time.deltaTime * lerpSpeed);
 
         characterController.center = Vector3.down * (normalHeight - characterController.height) / 2.0f;
-
-        float newCamPos = crouch ? cameraCrouchOffset : cameraNormalOffset;
-        Vector3 newPos = new Vector3(cameraTransform.localPosition.x, newCamPos, cameraTransform.localPosition.z);
-        cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newPos, Time.deltaTime *  lerpSpeed);
 
         if (characterController.isGrounded && CrossPlatformInputManager.GetButtonDown("Crouch"))
         {
@@ -192,7 +251,6 @@ public class FirstPersonController : MonoBehaviour {
         imageStand.enabled = false;
         imageCrouch.enabled = true;
         characterController.height = crouchHeight;
-        cameraTransform.localPosition = new Vector3(0f, cameraCrouchOffset, 0f);
         AS.PlayOneShot(legBreakSound);
         StartCoroutine(WaitLegsFix());
     }
@@ -201,24 +259,23 @@ public class FirstPersonController : MonoBehaviour {
     {
         if (state == 1)
         {
-            if(GameManager.enemy.seePlayer)
+            if (GameManager.enemy.seePlayer)
             {
                 GameManager.enemy.SendHidePlace();
             }
             StopAllCoroutines();
             imageExitHidePlace.enabled = true;
             lockedMovement = true;
-            crouch = true;        
+            crouch = true;
             characterController.height = crouchHeight;
-            cameraTransform.localPosition = new Vector3(0f, cameraCrouchOffset, 0f);
-        }else
+        }
+        else
         {
             imageExitHidePlace.enabled = false;
             lockedMovement = false;
             crouch = false;
             moveSpeed = walkSpeed;
             characterController.height = normalHeight;
-            cameraTransform.localPosition = new Vector3(0f, cameraNormalOffset, 0f);
             imageStand.enabled = true;
             imageCrouch.enabled = false;
         }
@@ -232,24 +289,23 @@ public class FirstPersonController : MonoBehaviour {
             GameManager.inventory.DropItem();
             locked = true;
             characterController.height = normalHeight;
-            cameraTransform.localPosition = new Vector3(0f, cameraNormalOffset, 0f);
             crouch = false;
             moveSpeed = walkSpeed;
             imageStand.enabled = true;
             imageCrouch.enabled = false;
         }
 
-        if(state == 2)
+        if (state == 2)
         {
             cameraAnimation.Play(cameraHitAnimName);
             GameManager.ScreenFade(2);
         }
 
-        if(state == 3)
+        if (state == 3)
         {
             cameraAnimation.Play(camHitName);
             GameManager.inventory.DropItem();
-            locked = true;           
+            locked = true;
             crouch = false;
             moveSpeed = walkSpeed;
             imageStand.enabled = true;
@@ -257,13 +313,10 @@ public class FirstPersonController : MonoBehaviour {
             GameManager.ScreenFade(3);
         }
 
-        if(state == 4)
+        if (state == 4)
         {
             GameManager.ScreenBlood(0);
         }
-
-       
-
     }
 
     private void Movement()
@@ -275,24 +328,21 @@ public class FirstPersonController : MonoBehaviour {
         Vector3 sideMove = transform.right * inputX;
         characterController.SimpleMove(forvardMove + sideMove);
 
+        // Update step cycle for headbob and footsteps
+        ProgressStepCycle(moveSpeed);
 
-        if(characterController.velocity.magnitude > 0.5f)
+        if (characterController.velocity.magnitude > 0.5f)
         {
             playerMoving = true;
-            cameraAnimation.Play(cameraMoveAnimName);
-            cameraAnimation[cameraMoveAnimName].speed = moveSpeed / 4f;       
         }
         else
         {
             playerMoving = false;
-            cameraAnimation.Play(cameraIdleAnimName);         
         }
-
-
     }
+
     public void SetRun()
     {
-
         if (!m_running && !m_staminaRecovery)
         {
             m_running = true;
@@ -321,7 +371,6 @@ public class FirstPersonController : MonoBehaviour {
 
     private void Stamina()
     {
-
         m_staminaBar.fillAmount = m_stamina / 100f;
 
         if (m_running && !crouch)
@@ -393,11 +442,8 @@ public class FirstPersonController : MonoBehaviour {
             ClampXAxis(clampXaxis.y);
         }
 
-
-
         if (clampByY)
         {
-
             if (clampY > clampYaxis.y)
             {
                 clampY = clampYaxis.y;
@@ -411,7 +457,6 @@ public class FirstPersonController : MonoBehaviour {
                 ClampYAxis(clampYaxis.x);
             }
         }
-
 
         cameraTransform.Rotate(Vector3.left * mouseY);
         transform.Rotate(Vector3.up * mouseX);
@@ -442,8 +487,6 @@ public class FirstPersonController : MonoBehaviour {
         }
         else
         {
-
-
             if (CheckDistance() > normalHeight)
             {
                 crouch = false;
@@ -468,7 +511,7 @@ public class FirstPersonController : MonoBehaviour {
 
     private void HidePlaceExit()
     {
-        if(hidePlace)
+        if (hidePlace)
         {
             if (CrossPlatformInputManager.GetButtonDown("Unhide"))
             {
@@ -479,9 +522,7 @@ public class FirstPersonController : MonoBehaviour {
 
     public void FootStepPlay()
     {
-        int r = Random.Range(1, footSteps.Length);
-        AS.volume = moveSpeed / 6;
-        AS.PlayOneShot(footSteps[r]);
+        // This is now handled by PlayFootStepAudio()
     }
 
     private IEnumerator WaitLegsFix()
@@ -489,19 +530,11 @@ public class FirstPersonController : MonoBehaviour {
         yield return new WaitForSeconds(legsFixTime);
         lockedMovement = false;
         GameManager.ScreenBlood(0);
-
     }
-
-    private bool isLerpingRotation = false;
-    private Quaternion startRotation;
-    private Quaternion targetRotation;
-    private float lerpTimer = 0f;
-    private float lerpDuration = 0f;
 
     public void LerpRotation(Transform lookAtTarget, float duration, bool isPlayerLocked)
     {
         if (isLerpingRotation) return;
-
         StartCoroutine(LerpRotationCoroutine(lookAtTarget, duration, isPlayerLocked));
     }
 
@@ -511,14 +544,10 @@ public class FirstPersonController : MonoBehaviour {
         bool wasLocked = locked;
         locked = isPlayerLocked;
 
-        // Store both body and camera rotations
         startRotation = transform.rotation;
         Quaternion startCamRotation = cameraTransform.rotation;
 
-        // Calculate direction to target (include Y axis for vertical look)
         Vector3 directionToTarget = lookAtTarget.position - cameraTransform.position;
-
-        // Create target rotation for both body (horizontal) and camera (full rotation)
         Quaternion targetBodyRotation = Quaternion.LookRotation(new Vector3(directionToTarget.x, 0, directionToTarget.z));
         targetRotation = Quaternion.LookRotation(directionToTarget);
 
@@ -529,30 +558,17 @@ public class FirstPersonController : MonoBehaviour {
         {
             lerpTimer += Time.deltaTime;
             float t = lerpTimer / lerpDuration;
-
             t = t * t * (3f - 2f * t);
 
-            // Rotate body for horizontal movement
             transform.rotation = Quaternion.Slerp(startRotation, targetBodyRotation, t);
-            // Rotate camera for vertical movement
             cameraTransform.rotation = Quaternion.Slerp(startCamRotation, targetRotation, t);
-
             yield return null;
         }
 
-        // Final rotations
         transform.rotation = targetBodyRotation;
         cameraTransform.rotation = targetRotation;
 
-        if (!wasLocked)
-        {
-            locked = false;
-        }
-
+        if (!wasLocked) locked = false;
         isLerpingRotation = false;
     }
-
 }
-
-
-
