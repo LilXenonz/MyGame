@@ -5,121 +5,96 @@ public class FoodSystem : MonoBehaviour
 {
     public GameObject Canvas;
 
-    public GameObject[] BrokenEggs;
+    public GameObject[] CheesePlaced;
 
-    public Toggle EggsToggle;
-    public Toggle SaltToggle;
-    public Toggle PepperToggle;
+    public Toggle cheeseToggle;
+    public Toggle pepperoniToggle;
+    public Toggle breadtoggle;
 
-    public Text EggsText;
+    public Text CheeseText;
     public Text InteractionText;
 
     public Inventory inventory;
 
-    // IDs must match your ItemsDatabase / Item components
-    public int eggItemID = 6;
-    public int pepperItemID = 7;
-    public int saltItemID = 8;
+    public int cheeseItemID;
+    public int PepperoniItemID;
+    public int breadItemID;
 
-    private int eggsPlaced = 0;
+    private int cheesePlaced = 0;
 
     private void Awake()
     {
-        if (inventory == null)
-            inventory = FindObjectOfType<Inventory>();
-
-        if (inventory == null)
-            Debug.LogError("[FoodSystem] Inventory is null. Assign it in inspector.");
+        inventory = FindObjectOfType<Inventory>();
     }
 
-    public void TakeEggs()
-    {
-        // With your setup the world egg object already has Item component + prefab,
-        // so you don't need to create items here. Keep behaviour minimal.
-        CloseCanvas();
-    }
-
-    public void TakeSalt()
+    public void TakeCheese()
     {
         CloseCanvas();
     }
 
-    public void TakePepper()
+    public void Takepepperoni()
     {
         CloseCanvas();
     }
 
-    // Called when interacting with the pan
-    public void PlaceEggs()
+    public void TakeDough()
+    {
+        CloseCanvas();
+    }
+
+    public void PlaceFood()
     {
         if (inventory == null)
         {
-            Debug.LogError("[FoodSystem.PlaceEggs] Inventory null.");
             OpenCanvas();
             return;
         }
 
-        // Handle pepper
-        if (inventory.CurrentItemID == pepperItemID)
+        if (inventory.CurrentItemID == PepperoniItemID)
         {
-            if (PepperToggle != null) PepperToggle.isOn = true;
-            else Debug.LogWarning("[FoodSystem] PepperToggle not assigned.");
+            breadtoggle.isOn = true;
             inventory.RemoveItem();
             return;
         }
 
-        // Handle salt
-        if (inventory.CurrentItemID == saltItemID)
+        if (inventory.CurrentItemID == breadItemID)
         {
-            if (SaltToggle != null) SaltToggle.isOn = true;
-            else Debug.LogWarning("[FoodSystem] SaltToggle not assigned.");
+            pepperoniToggle.isOn = true;
             inventory.RemoveItem();
             return;
         }
 
-        // Handle eggs: place one broken egg per egg item in inventory.
-        if (inventory.CurrentItemID == eggItemID)
+        if (inventory.CurrentItemID == cheeseItemID)
         {
-            // safety checks
-            if (BrokenEggs == null || BrokenEggs.Length == 0)
+            if (CheesePlaced == null || CheesePlaced.Length == 0)
             {
-                Debug.LogWarning("[FoodSystem.PlaceEggs] BrokenEggs not set or empty.");
-                inventory.RemoveItem(); // still remove so player doesn't get stuck
+                inventory.RemoveItem(); 
                 return;
             }
 
-            // Activate next broken egg visual if available
-            if (eggsPlaced < BrokenEggs.Length)
+            if (cheesePlaced < CheesePlaced.Length)
             {
-                GameObject next = BrokenEggs[eggsPlaced];
-                if (next != null)
-                    next.SetActive(true);
-                else
-                    Debug.LogWarning($"[FoodSystem.PlaceEggs] BrokenEggs[{eggsPlaced}] is null.");
+                GameObject next = CheesePlaced[cheesePlaced];
+                 next.SetActive(true);
 
-                eggsPlaced++;
 
-                // update UI text if assigned
-                if (EggsText != null)
-                    EggsText.text = $"Eggs ({eggsPlaced}/{BrokenEggs.Length})";
+                cheesePlaced++;
+
+                if (CheeseText != null)
+                    CheeseText.text = $"Cheese ({cheesePlaced}/{CheesePlaced.Length})";
             }
 
-            // Remove the egg item immediately after placing one egg
             inventory.RemoveItem();
 
-            // If we've completed all egg slots, toggle and (optionally) show result
-            if (eggsPlaced >= BrokenEggs.Length)
+            if (cheesePlaced >= CheesePlaced.Length)
             {
-                if (EggsToggle != null) EggsToggle.isOn = true;
-                Debug.Log("[FoodSystem] All eggs placed.");
+                if (cheeseToggle != null) cheeseToggle.isOn = true;
             }
 
-            // Show canvas to display pan UI/results
             OpenCanvas();
             return;
         }
 
-        // Not holding anything relevant -> open the pan UI
         OpenCanvas();
     }
 

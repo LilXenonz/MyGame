@@ -3680,6 +3680,31 @@ MonoBehaviour:
     id: 5
     itemPrefab: {fileID: 0}
     handPosID: 4
+  - name: Cheese ID 6
+    id: 6
+    itemPrefab: {fileID: 1332554507563403928, guid: 8af9a14505f888c48bff67cabaf5e589,
+      type: 3}
+    handPosID: 0
+  - name: Olives ID 7
+    id: 7
+    itemPrefab: {fileID: 1791988177380016432, guid: 06f92965fcd268542a8dc0fa1e94a783,
+      type: 3}
+    handPosID: 0
+  - name: Pepper ID 8
+    id: 8
+    itemPrefab: {fileID: 1137993489290234742, guid: a6fe4bc7fae6f094291438cd669f21b6,
+      type: 3}
+    handPosID: 0
+  - name: Ham ID 9
+    id: 9
+    itemPrefab: {fileID: 3463146959064836372, guid: 68f1e70a0fdf8cc449839d4b7d656128,
+      type: 3}
+    handPosID: 0
+  - name: Pepperoni ID 10
+    id: 10
+    itemPrefab: {fileID: 1123567743594747965, guid: 345ccfce14db30541918100e6a6fc317,
+      type: 3}
+    handPosID: 0
 --- !u!114 &4214042011073054590
 MonoBehaviour:
   m_ObjectHideFlags: 0
