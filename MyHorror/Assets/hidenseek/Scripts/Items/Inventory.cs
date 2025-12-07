@@ -9,7 +9,8 @@ public class Inventory : MonoBehaviour {
     public ItemsDatabase database;
     [HideInInspector]
     public int CurrentItemID;
-    private GameObject CurrentItem;
+    [HideInInspector]
+    public GameObject CurrentItem;
     [Tooltip("Layer ID for item camera culling mask (10 - Item) When we pick up item we make layer 10 (Item) for culling")]
     public int itemCameraLayerID;
     [Tooltip("Layer ID for interact (8 - Interact layer) When we drop item we make layer of this item to 8 (Interact) if we wanna pick up item later")]

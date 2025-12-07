@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332554507563403928}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15276745, y: -0.62073517, z: -0.51746356, w: 0.5688423}
+  m_LocalRotation: {x: 0.15276662, y: -0.6207334, z: -0.5174607, w: 0.5688471}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 43.66124, y: 43.66123, z: 43.661236}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.364, y: 50.869, z: 3.722}
+  m_LocalEulerAnglesHint: {x: -27.944, y: -78.064, z: -61.775}
 --- !u!33 &573352587424088591
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -64,10 +64,12 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -647733925137163964, guid: 1c90b98d7e4fa844faa5f5cc00f404c4, type: 3}
+  - {fileID: 2100000, guid: d87f947797311d944b9a71151ae67329, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,9 +87,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7898372887176051021
 BoxCollider:
@@ -132,10 +136,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332554507563403928}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

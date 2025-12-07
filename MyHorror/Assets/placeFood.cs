@@ -1,185 +1,171 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlaceFood : MonoBehaviour
 {
-    public GameObject Canvas;
+    public bool hasDough = false;
+    public bool hasSauce = false;
+    public List<int> placedToppings = new List<int>();
 
-    public GameObject[] Placed;
-    public GameObject[] Placed2;
-    public GameObject[] Placed3;
-    public GameObject[] Placed4;
-    public GameObject[] Placed5;
-    public GameObject[] Placed6;
+    public GameObject doughVisual;
+    public GameObject sauceVisual;
+    public GameObject cheeseVisual;
+    public GameObject pepperoniVisual;
 
-    public Toggle Toggle1;
-    public Toggle Toggle2;
-    public Toggle Toggle3;
+    public Transform pizzaSpawnPoint;
+    public GameObject currentUncookedPizza;
 
-    public Text Text1;
-    public Text Text2;
-    public Text Text3;
+    [HideInInspector]
+    public PizzaRecipe currentRecipe;
+    private bool pizzaComplete = false;
 
-    public Text InteractionText;
+    private Dictionary<int, GameObject> ingredientVisuals;
 
     public Inventory inventory;
-
-    public int CheeseItemID;
-    public int PinnapleeItemID;
-    public int PeperoniItemID;
-    public int OliveItemID;
-    public int HamItemID;
-    public int PepperItemID;
-
-    private int cheesePlaced = 0;
-    private int PinnapleePlaced = 0;
-    private int PeperoniPlaced = 0;
-    private int OlivePlaced = 0;
-    private int PepperPlaced = 0;
+    public CustomerOrder order;    
 
 
-    public void TakeItem()
+    void Start()
     {
-        CloseCanvas();
+        ingredientVisuals = new Dictionary<int, GameObject>()
+        {
+            {12, doughVisual},
+            {11, sauceVisual},
+            {2, cheeseVisual},
+            {3, pepperoniVisual}
+        };
+        HideAllVisuals();
+
+        currentRecipe = order.currentOrder;
     }
 
-    public void PlaceFoodVO()
+    public void TryPlaceIngredient()
     {
-        if (inventory.CurrentItemID == CheeseItemID)
+        if (pizzaComplete) return;
+
+        if (!hasDough) //can place
         {
-            if (cheesePlaced == 0)
+            if (inventory.CurrentItemID == 12)
             {
-                cheesePlaced = 1;
-                Text1.text = "Eggs(1/2)";
+                PlaceDough();
+                inventory.RemoveItem();
+            }
+            
+            return;
+        }
 
+        if (!hasSauce && hasDough)// no sause and dough is placed
+        {
+            if (inventory.CurrentItemID == 11)
+            {
+                PlaceSauce();
                 inventory.RemoveItem();
 
+            }       
 
-            }
+            return;
+        }
 
-            if (cheesePlaced == 1)
+        if(hasSauce && hasDough)
+        {
+            if (currentRecipe == null) return;
+
+            bool isValidTopping = false;
+            foreach (int toppingID in currentRecipe.toppingIDs)
             {
-
-                cheesePlaced = 2;
-                Text2.text = "Eggs(2/2)";
-
-                inventory.RemoveItem();
-
-                return;
-
+                if (inventory.CurrentItemID == toppingID) isValidTopping = true;
             }
+
+            if (!isValidTopping) return;
+
+            if (placedToppings.Contains(inventory.CurrentItemID)) return;
+
+            PlaceTopping(inventory.CurrentItemID);
+
+            inventory.RemoveItem();
         }
         
-        if (inventory.CurrentItemID == PinnapleeItemID)
-        {
-            if (PinnapleePlaced == 0)
-            {
-                PinnapleePlaced = 1;
-                Text1.text = "Pinnaplee(1/2)";
-
-                inventory.RemoveItem();
-
-
-            }
-
-            if (PinnapleePlaced == 1)
-            {
-
-                PinnapleePlaced = 2;
-                Text2.text = "Pinnaplee(2/2)";
-
-                inventory.RemoveItem();
-
-                return;
-
-            }
-        }
-
-        if (inventory.CurrentItemID == PeperoniItemID)
-        {
-            if (PeperoniPlaced == 0)
-            {
-                PeperoniPlaced = 1;
-                Text1.text = "Peperoni(1/2)";
-
-                inventory.RemoveItem();
-
-
-            }
-
-            if (PeperoniPlaced == 1)
-            {
-
-                PeperoniPlaced = 2;
-                Text2.text = "Peperoni(2/2)";
-
-                inventory.RemoveItem();
-
-                return;
-
-            }
-        }
-
-        if (inventory.CurrentItemID == OliveItemID)
-        {
-            if (OlivePlaced == 0)
-            {
-                OlivePlaced = 1;
-                Text1.text = "Olive(1/2)";
-
-                inventory.RemoveItem();
-
-
-            }
-
-            if (OlivePlaced == 1)
-            {
-
-                OlivePlaced = 2;
-                Text2.text = "Oliv(2/2)";
-
-                inventory.RemoveItem();
-
-                return;
-
-            }
-        }
-
-        if (inventory.CurrentItemID == PepperItemID)
-        {
-            if (PepperPlaced == 0)
-            {
-                PepperPlaced = 1;
-                Text1.text = "Pepper(1/2)";
-
-                inventory.RemoveItem();
-
-
-            }
-
-            if (PepperPlaced == 1)
-            {
-
-                PepperPlaced = 2;
-                Text2.text = "Pepper(2/2)";
-
-                inventory.RemoveItem();
-
-                return;
-
-            }
-        }
-
-        OpenCanvas();
     }
 
-    private void CloseCanvas()
+    void PlaceDough()
     {
-        if (Canvas != null && Canvas.activeSelf) Canvas.SetActive(false);
+        if (ingredientVisuals.ContainsKey(12)) ingredientVisuals[12].SetActive(true);
+        hasDough = true;
     }
 
-    private void OpenCanvas()
+    void PlaceSauce()
     {
-        if (Canvas != null && !Canvas.activeSelf) Canvas.SetActive(true);
+        if (ingredientVisuals.ContainsKey(11)) ingredientVisuals[11].SetActive(true);
+        hasSauce = true;
+    }
+
+    void PlaceTopping(int toppingID)
+    {
+        if (ingredientVisuals.ContainsKey(toppingID)) ingredientVisuals[toppingID].SetActive(true);
+        placedToppings.Add(toppingID);
+        CheckIfPizzaComplete();
+    }
+
+    void CheckIfPizzaComplete()
+    {
+        if (currentRecipe == null) return;
+
+        bool allToppingsPlaced = true;
+        foreach (int requiredTopping in currentRecipe.toppingIDs)
+        {
+            if (!placedToppings.Contains(requiredTopping)) allToppingsPlaced = false;
+        }
+
+        if (allToppingsPlaced && hasDough && hasSauce)
+        {
+            pizzaComplete = true;
+            SpawnUncookedPizza();
+        }
+    }
+
+    void SpawnUncookedPizza()
+    {
+        if (currentRecipe == null) return;
+
+        HideAllVisuals();
+
+        currentUncookedPizza = Instantiate(currentRecipe.uncookedPrefab, pizzaSpawnPoint.position, pizzaSpawnPoint.rotation);
+
+        PizzaID pizzaID = currentUncookedPizza.AddComponent<PizzaID>();
+        pizzaID.pizzaID = currentRecipe.uncookedPizzaID;
+        pizzaID.isCooked = false;
+    }
+
+    public GameObject TakeUncookedPizza()
+    {
+        if (!pizzaComplete || currentUncookedPizza == null) return null;
+
+        GameObject pizza = currentUncookedPizza;
+        currentUncookedPizza = null;
+        ResetBoard();
+        return pizza;
+    }
+
+    void HideAllVisuals()
+    {
+        foreach (var visual in ingredientVisuals.Values)
+        {
+            if (visual != null) visual.SetActive(false);
+        }
+    }
+
+    void ResetBoard()
+    {
+        hasDough = false;
+        hasSauce = false;
+        placedToppings.Clear();
+        pizzaComplete = false;
+        HideAllVisuals();
+    }
+
+    public void SetRecipe(PizzaRecipe recipe)
+    {
+        currentRecipe = recipe;
+        ResetBoard();
     }
 }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6951894093449557594}
   - component: {fileID: 5601268855257367398}
   - component: {fileID: 7633322410780408203}
-  - component: {fileID: 1049716345221443059}
   - component: {fileID: 7139759039508342529}
   - component: {fileID: 6095698670732024259}
   m_Layer: 8
@@ -65,10 +64,12 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6050651322315956233, guid: 1c90b98d7e4fa844faa5f5cc00f404c4, type: 3}
+  - {fileID: 2100000, guid: 08fca1c3d8ff8384ba35f21d16de7596, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,9 +87,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7633322410780408203
 BoxCollider:
@@ -111,21 +114,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.012832423, y: 0.014492492, z: 0.002506947}
   m_Center: {x: -0.0007449601, y: -0.0008266403, z: 0.00078138424}
---- !u!114 &1049716345221443059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123567743594747965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c45f91705217e1c4d8277c57f9ad8078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodType: 1
-  foodSystem: {fileID: 0}
-  customLabel: Pick Pepperoni
 --- !u!114 &7139759039508342529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,10 +136,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123567743594747965}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

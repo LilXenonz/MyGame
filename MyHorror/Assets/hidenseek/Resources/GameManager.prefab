@@ -894,7 +894,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3705,6 +3705,16 @@ MonoBehaviour:
     itemPrefab: {fileID: 1123567743594747965, guid: 345ccfce14db30541918100e6a6fc317,
       type: 3}
     handPosID: 0
+  - name: Salsa ID 11
+    id: 11
+    itemPrefab: {fileID: 6533494918312803367, guid: 71c254334ac61d842a692bb4ae9b46cf,
+      type: 3}
+    handPosID: 0
+  - name: Wheat ID 12
+    id: 12
+    itemPrefab: {fileID: 3340302787601125717, guid: cbe74e1296d39b24a83a8de604ee8c03,
+      type: 3}
+    handPosID: 6
 --- !u!114 &4214042011073054590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7104,6 +7114,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8040,6 +8051,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
