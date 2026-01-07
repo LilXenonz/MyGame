@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3460111005027438500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6709360033103498161}
+  - component: {fileID: 1513705027513222680}
+  m_Layer: 0
+  m_Name: StockInfoManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6709360033103498161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3460111005027438500}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.87955, y: 0, z: 10.39235}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1513705027513222680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3460111005027438500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0b578c5fefe9a41a6b0ce3f63d6e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StockInfoController
+  soapInfo:
+  - name: Blue Soap
+    typeOfStock: 0
+    price: 2
+    stockObject: {fileID: 4891872685205398395, guid: 117db1b75b2b6a244b8b2cbc92624604, type: 3}
+  - name: Green Soap
+    typeOfStock: 0
+    price: 2
+    stockObject: {fileID: 8682384075243422677, guid: 3331bcddd037d564b980639ed3d4be75, type: 3}
+  soapBottleInfo:
+  - name: Blue Soap
+    typeOfStock: 0
+    price: 2
+    stockObject: {fileID: 4891872685205398395, guid: 117db1b75b2b6a244b8b2cbc92624604, type: 3}
+  - name: Green Soap
+    typeOfStock: 0
+    price: 2
+    stockObject: {fileID: 8682384075243422677, guid: 3331bcddd037d564b980639ed3d4be75, type: 3}
+  soapBoxinfo:
+  - name: Power SoapBox
+    typeOfStock: 2
+    price: 10
+    stockObject: {fileID: 2572297240332370865, guid: 15472a8a64b9d5b4182abf3be7befc1f, type: 3}
+  - name: Red SoapBox
+    typeOfStock: 2
+    price: 10
+    stockObject: {fileID: 4027914452799342937, guid: 59e4598098618f045b43f5cab9dac10b, type: 3}
+  towelInfo:
+  - name: Blue Towel
+    typeOfStock: 3
+    price: 15
+    stockObject: {fileID: 8133668963038689138, guid: 7f5cb22f5ed7c234eab4515616c620ce, type: 3}
+  - name: Grey Towel
+    typeOfStock: 3
+    price: 15
+    stockObject: {fileID: 7867785839910197673, guid: 5badf22c3ff99bc40bd7293f0d2c92c6, type: 3}
+  - name: Purple Towel
+    typeOfStock: 3
+    price: 15
+    stockObject: {fileID: 1226344757461323623, guid: 8e3faff147856604287a2f3993cb13b8, type: 3}
