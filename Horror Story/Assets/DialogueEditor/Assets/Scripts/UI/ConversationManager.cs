@@ -270,7 +270,7 @@ namespace DialogueEditor
                     m_selectedOption = null;
                     break;
                 case eState.TransitioningDialogueBoxOn:
-                    SetColorAlpha(DialogueBackground, 1);
+                    SetColorAlpha(DialogueBackground, 0.75f);
                     SetColorAlpha(NpcIcon, 1);
                     SetColorAlpha(NameText, 1);
                     break;
@@ -333,7 +333,7 @@ namespace DialogueEditor
                 return;
             }
 
-            SetColorAlpha(DialogueBackground, t);
+            SetColorAlpha(DialogueBackground, t * 0.75f);
             SetColorAlpha(NpcIcon, t);
             SetColorAlpha(NameText, t);
         }
@@ -737,16 +737,16 @@ namespace DialogueEditor
                 index = m_uiOptions.Count - 1;
 
             if (m_currentSelectedIndex >= 0)
-                m_uiOptions[m_currentSelectedIndex].SetHovering(false);
+                //m_uiOptions[m_currentSelectedIndex].SetHovering(false);
             m_currentSelectedIndex = index;
-            m_uiOptions[index].SetHovering(true);
+            //m_uiOptions[index].SetHovering(true);
         }
 
         private void UnselectOption()
         {
             if (m_currentSelectedIndex < 0) { return; }
 
-            m_uiOptions[m_currentSelectedIndex].SetHovering(false);
+            //m_uiOptions[m_currentSelectedIndex].SetHovering(false);
             m_currentSelectedIndex = -1;
         }
 
