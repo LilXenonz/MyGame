@@ -1,6 +1,8 @@
+using DialogueEditor;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DialogueEditor;
 
 public class CarController : MonoBehaviour
 {
@@ -14,9 +16,9 @@ public class CarController : MonoBehaviour
 
     public float InteractionRange;
 
-    public ConversationData conversation;
-
     public LayerMask DriveLayer;
+
+    public NPCConversation conversation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,7 +47,10 @@ public class CarController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, InteractionRange, DriveLayer))
             {
-                CustomerDialogueManager.instance.StartDialogue(0, lookat, onFinishedDialogue);
+                //CustomerDialogueManager.instance.StartDialogue(0, lookat, onFinishedDialogue);
+                Cursor.lockState = CursorLockMode.None;
+
+                ConversationManager.Instance.StartConversation(conversation);
             }
 
         }     
