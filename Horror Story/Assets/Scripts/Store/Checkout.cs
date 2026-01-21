@@ -1,3 +1,4 @@
+using DialogueEditor;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Cinemachine;
@@ -15,11 +16,15 @@ public class Checkout : MonoBehaviour
 
     public List<Customer> customersInQueue = new List<Customer>();
 
-    private bool isTalking = false;
-
     public CinemachineCamera TalkZoomVcam;
 
     public PlayerController playerController ;
+
+    //public CinemachineCamera playerCam;
+    public CinemachineCamera NPCCam;
+
+    private LookAtFunc currentLookAtScript;
+
 
 
     private void Awake()
@@ -60,47 +65,29 @@ public class Checkout : MonoBehaviour
 
     public void CheckoutCustomer()
     {
-        if (checkoutScreen.activeSelf == true && customersInQueue.Count > 0 && !isTalking) 
+        if (checkoutScreen.activeSelf == true && customersInQueue.Count > 0) 
         {
             HidePrice();
 
             //add money to balance not done but in StoreController.instance.AddMoney(customersInQueue[0].GetTotalSpent);
+
+            ConversationManager.Instance.StartConversation(customersInQueue[0].conversation);
+
             /*customersInQueue[0].StartLeaving();
             customersInQueue.RemoveAt(0);
             UpdateQueue();*/
 
-            isTalking = true;
-            Customer c = customersInQueue[0];
-            CustomerDialogueManager.instance.StartDialogue(
-                c.dialogueIndex,
-                c.lookAtScript,
-                OnTalkFinished
-            );
-
-            playerController.enabled = false;
             TalkZoomVcam.Priority = 4;
             TalkZoomVcam.LookAt = customersInQueue[0].transform;
         }
 
     }
 
-    private void OnTalkFinished()
+    void FinishCheckout()
     {
-        isTalking = false;
-
-        playerController.enabled = true;
-        TalkZoomVcam.Priority = 0;
-
-        TalkZoomVcam.LookAt = null;
-
-
-        if (customersInQueue.Count > 0)
-        {
-            //add money to balance not done but in StoreController.instance.AddMoney(customersInQueue[0].GetTotalSpent);
-            customersInQueue[0].StartLeaving();
-            customersInQueue.RemoveAt(0);
-            UpdateQueue();
-        }
+        customersInQueue[0].StartLeaving();
+        customersInQueue.RemoveAt(0);
+        UpdateQueue();
     }
 
 
@@ -118,5 +105,55 @@ public class Checkout : MonoBehaviour
         {
             customersInQueue[i].UpdateQueuePoint(queuePoint.position + (queuePoint.forward * i * 1.6f));
         }
+
+        if (customersInQueue.Count > 0)
+        {
+            currentLookAtScript = customersInQueue[0].lookAtScript;
+        }
+        else
+        {
+            currentLookAtScript = null;
+        }
     }
+    private void onDialogue()
+    {
+        NPCCam.Priority = 5;
+        PlayerController.instance.lockPlayer = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        currentLookAtScript.IKActive = true;
+    }
+
+    private void offDialogue()
+    {
+        NPCCam.Priority = 0;
+        PlayerController.instance.lockPlayer = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        currentLookAtScript.IKActive = false;
+    }
+
+    private void OnEnable()
+    {
+        ConversationManager.OnConversationStarted += ConversationStart;
+        ConversationManager.OnConversationEnded += ConversationEnd;
+    }
+
+    private void OnDisable()
+    {
+        ConversationManager.OnConversationStarted -= ConversationStart;
+        ConversationManager.OnConversationEnded -= ConversationEnd;
+    }
+
+    private void ConversationStart()
+    {
+        onDialogue();
+    }
+
+    private void ConversationEnd()
+    {
+        offDialogue();
+        FinishCheckout();
+    }
+
 }

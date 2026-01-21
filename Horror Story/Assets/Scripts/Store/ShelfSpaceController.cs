@@ -169,7 +169,7 @@ public class ShelfSpaceController : MonoBehaviour
             }
         }
 
-        if (FurnitureController.instance.AreAllShelvesFull() == true)
+        if (FurnitureController.instance.AreAllShelvesFull() == true && ObjectiveManager.instance.currentObjectiveIndex == 2)
         {
             ObjectiveManager.instance.CompleteCurrentObjective();
         }

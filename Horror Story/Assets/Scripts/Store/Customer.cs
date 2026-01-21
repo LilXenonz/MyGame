@@ -1,4 +1,7 @@
+using DialogueEditor;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Customer : MonoBehaviour
@@ -29,13 +32,12 @@ public class Customer : MonoBehaviour
 
     private Vector3 queuePoint;
 
-    [Header("Dialogue")]
-    public int dialogueIndex;
     public LookAtFunc lookAtScript;
 
     private float currentSpeed;
 
-    public ConversationData conversation;
+    public NPCConversation conversation;
+
 
     private void Start()
     {
@@ -189,6 +191,7 @@ public class Customer : MonoBehaviour
                 else
                 {
                     Destroy(gameObject);
+                    ObjectiveManager.instance.CompleteCurrentObjective();
                 }
 
                 break;
@@ -325,7 +328,7 @@ public class Customer : MonoBehaviour
         return total;
     }
 
-    public List<Customer> customersToSpawn = new List<Customer>();
+    //public List<Customer> customersToSpawn = new List<Customer>();
 
     public List<NavPoint> entryPointsLeft, entryPointsRight, creepPoints;
 
@@ -374,6 +377,9 @@ public class Customer : MonoBehaviour
 
 
     }
+
+
+    
 }
 
 

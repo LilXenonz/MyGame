@@ -7,15 +7,16 @@ using UnityEngine.Events;
 public class ObjectiveManager : MonoBehaviour
 {
     public static ObjectiveManager instance;
-
     public TextMeshProUGUI objectiveText;
     public AudioSource voiceSource;
     public float textDisplayTime = 5f;
-
     public List<Objective> objectives = new List<Objective>();
-
-    private int currentObjectiveIndex = 0;
+    [HideInInspector] public int currentObjectiveIndex = 0;
     private bool objectiveActive = false;
+
+    // Highlighting system
+    private List<Renderer> currentHighlightedRenderers = new List<Renderer>();
+    private Dictionary<Renderer, Material[]> originalMaterials = new Dictionary<Renderer, Material[]>();
 
     void Awake()
     {
@@ -35,7 +36,6 @@ public class ObjectiveManager : MonoBehaviour
 
         currentObjectiveIndex = index;
         objectiveActive = true;
-
         Objective obj = objectives[currentObjectiveIndex];
 
         foreach (GameObject go in obj.activateObjects)
@@ -47,6 +47,7 @@ public class ObjectiveManager : MonoBehaviour
         {
             if (go) go.SetActive(false);
         }
+
 
         if (objectiveText)
         {
@@ -65,7 +66,6 @@ public class ObjectiveManager : MonoBehaviour
     public void CompleteCurrentObjective()
     {
         if (!objectiveActive) return;
-
         objectiveActive = false;
 
         Objective obj = objectives[currentObjectiveIndex];
@@ -81,6 +81,7 @@ public class ObjectiveManager : MonoBehaviour
             StartObjective(obj.nextObjectiveIndex);
         }
     }
+
 
     IEnumerator HideTextAfterDelay()
     {
@@ -105,11 +106,9 @@ public class Objective
     [TextArea(2, 4)]
     public string text;
     public AudioClip voiceClip;
-
     public List<GameObject> activateObjects = new List<GameObject>();
     public List<GameObject> deactivateObjects = new List<GameObject>();
 
     public UnityEvent interactEvent;
-
     public int nextObjectiveIndex = -1;
 }

@@ -43,6 +43,15 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask InteractLayer;
 
+    public static PlayerController instance;
+
+    public bool lockPlayer;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -52,58 +61,62 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 lookInput = lookAction.action.ReadValue<Vector2>();
-
-        HoriRot += lookInput.x * Time.deltaTime * LookSpeed;
-        transform.rotation = Quaternion.Euler(0f, HoriRot, 0f);
-
-        VertRot -= lookInput.y * Time.deltaTime * LookSpeed;
-        VertRot = Mathf.Clamp(VertRot, minLookAngle, maxLookAngle);
-        Camera.transform.localRotation = Quaternion.Euler(VertRot, 0f, 0f);
-
-
-
-
-        Vector2 MoveInput = moveAction.action.ReadValue<Vector2>();
-
-
-        //debug.log(MoveInput);
-
-        //transform.position = transform.position + new Vector3(moveInput.x * Time.deltaTime * moveSpeed, 0f, moveInput.y * Time.deltaTime * moveSpeed);
-
-        //Vector3 moveAmount = new Vector3(MoveInput.x, 0f, MoveInput.y);
-
-        Vector3 vertMove = transform.forward * MoveInput.y;
-
-        Vector3 horiMove = transform.right * MoveInput.x;
-
-        //Debug.Log(vertMove + "-" + horiMove);
-
-        Vector3 moveAmount = horiMove + vertMove;
-        moveAmount = moveAmount.normalized;
-
-
-        moveAmount = moveAmount * moveSpeed;
-
-
-        if(CharacterController.isGrounded == true)
-        {
-            ySpeed = 0f;
-
-            if (jumpAction.action.WasPressedThisFrame())
+        if (lockPlayer == false)
+        { 
+            Vector2 lookInput = lookAction.action.ReadValue<Vector2>();
+    
+            HoriRot += lookInput.x * Time.deltaTime * LookSpeed;
+            transform.rotation = Quaternion.Euler(0f, HoriRot, 0f);
+    
+            VertRot -= lookInput.y * Time.deltaTime * LookSpeed;
+            VertRot = Mathf.Clamp(VertRot, minLookAngle, maxLookAngle);
+            Camera.transform.localRotation = Quaternion.Euler(VertRot, 0f, 0f);
+    
+    
+    
+    
+            Vector2 MoveInput = moveAction.action.ReadValue<Vector2>();
+    
+    
+            //debug.log(MoveInput);
+    
+            //transform.position = transform.position + new Vector3(moveInput.x * Time.deltaTime * moveSpeed, 0f, moveInput.y * Time.deltaTime * moveSpeed);
+    
+            //Vector3 moveAmount = new Vector3(MoveInput.x, 0f, MoveInput.y);
+    
+            Vector3 vertMove = transform.forward * MoveInput.y;
+    
+            Vector3 horiMove = transform.right * MoveInput.x;
+    
+            //Debug.Log(vertMove + "-" + horiMove);
+    
+            Vector3 moveAmount = horiMove + vertMove;
+            moveAmount = moveAmount.normalized;
+    
+    
+            moveAmount = moveAmount * moveSpeed;
+    
+    
+            if (CharacterController.isGrounded == true)
             {
-                ySpeed = jumpForce;
+                ySpeed = 0f;
+    
+                if (jumpAction.action.WasPressedThisFrame())
+                {
+                    ySpeed = jumpForce;
+                }
             }
+    
+            ySpeed = ySpeed + (Physics.gravity.y * Time.deltaTime);
+    
+    
+    
+    
+            moveAmount.y = ySpeed;
+    
+            CharacterController.Move(moveAmount * Time.deltaTime);
+    
         }
-        
-        ySpeed = ySpeed + (Physics.gravity.y * Time.deltaTime);
-
-        
-
-
-        moveAmount.y = ySpeed;
-
-        CharacterController.Move(moveAmount * Time.deltaTime);
 
         //check pickups 
 
